@@ -24,9 +24,9 @@ public class MemberController {
     }
 
     // SEARCH
-    @GetMapping("/api/member/search")
-    public List<Member> search() {
-        return memberService.search();
-    }
+//    @GetMapping("/api/member/search")
+//    public List<Member> search() {
+//        return memberService.search();
+//    }
 
 }

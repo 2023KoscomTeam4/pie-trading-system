@@ -1,14 +1,15 @@
 package com.hackerton.pieSystem.domain;
 
 
+import jakarta.persistence.Entity;
 import lombok.Data;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Data
+@Entity
 public class Member {
 
     private @Id
@@ -17,11 +18,5 @@ public class Member {
     private String name;
     private String username;
     private String password;
-    private String grade;
     private int age;
-    private String job;
-    private String investOpt;
-    private int salary;
-    private int property;
-    private String profile;
 }
