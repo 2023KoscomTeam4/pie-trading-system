@@ -30,12 +30,12 @@
                 </v-list-item>
             </v-list>
             
-            <router-link to="/test">
+            <router-link to="/room">
                     
                     <v-list-item>
                         <v-list-item-content>
                             <i class="fas fa-home-user"></i>
-                            <v-list-item-subtitle align="center">테스트 화면</v-list-item-subtitle>
+                            <v-list-item-subtitle align="center">방 만들기</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                 
