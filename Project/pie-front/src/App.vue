@@ -3,16 +3,6 @@
   <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
 <style>
 #app {
@@ -27,20 +17,21 @@ export default {
 
 <template>
   <v-app>
-    <Navigation />
-    <v-content>
+    <LandingPage/>
+
+    <v-main>
       <router-view></router-view>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
+import LandingPage from '@/components/LandingPage'
 export default {
   name: "App",
 
   components: {
-    Navigation,
+    LandingPage,
   },
 
   data: () => ({  })};

@@ -1,19 +1,9 @@
 <template>
     <nav>
-        <v-navigation-drawer v-model="drawer" dark app mini-variant mini-variant-width="100" class="orange darken-3">
-            <v-list style="position: absolute; top:0" class="ml-3" flat>
-                <v-img
-                  :src="require('../assets/logo.png')"
-                  width="80"
-                />
-            </v-list>
-
             <v-list>
-                <v-list-item class="mb-12">
-                    <v-list-item-action>
-
-                    </v-list-item-action>
-                </v-list-item>
+                <img src="../assets/koscom.jpg"
+                        width="200"
+                        />
             </v-list>
             <v-list flat>
                 <router-link to="/home">
@@ -39,16 +29,19 @@
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
-            <v-list style="position: absolute; bottom:0" class="ml-3" flat>
-                <v-list-item router to="/">
-                    <v-list-item-action>
-                        <v-icon right>fas fa-sign-out-alt</v-icon>
-                    </v-list-item-action>
-                </v-list-item>
-            </v-list>
+            
+            <router-link to="/test">
+                    
+                    <v-list-item>
+                        <v-list-item-content>
+                            <i class="fas fa-home-user"></i>
+                            <v-list-item-subtitle align="center">테스트 화면</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                
+            </router-link>
 
-        </v-navigation-drawer>
-    </nav>
+        </nav>
 </template>
 <script>
 export default {
