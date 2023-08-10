@@ -22,7 +22,19 @@ const routes = [
     name: "Room",
     component: () =>
       import(/* webpackChunkName: "room" */ "../views/Room.vue")
-  }
+  },
+  {
+    path: "/room2",
+    name: "Room2",
+    component: () =>
+      import(/* webpackChunkName: "room" */ "../views/Room2.vue")
+  },
+ {
+   path: "/ChatRoom",
+   name: "ChatRoom",
+   component: () =>
+     import(/* webpackChunkName: "room" */ "../views/ChatRoom.vue")
+ }
 ];
 
 export {router}
