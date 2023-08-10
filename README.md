@@ -1,5 +1,5 @@
 ## 2023 신입사원 코스콤 해커톤 4조 프로젝트
-##Pie Trading System
+## Pie Trading System
 
 
 ### API 명세서
