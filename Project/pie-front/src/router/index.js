@@ -36,7 +36,7 @@ const routes = [
      import(/* webpackChunkName: "room" */ "../views/ChatRoom.vue")
  },
  {
-  path: "/createroom",
+  path: "/room-create",
   name: "Createroom",
   component: () =>
     import(/* webpackChunkName: "room" */ "../views/Createroom.vue")
