@@ -20,7 +20,7 @@
                 {{ item.stockName }}
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-card height="70%" hint="시장가">가격 {{ item.price }}</v-card>
+                <v-card height="70%" hint="시가">금일 시작가 {{ item.price }}</v-card>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
