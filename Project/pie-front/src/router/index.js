@@ -43,6 +43,12 @@ const routes = [
   name: "Createroom",
   component: () =>
     import(/* webpackChunkName: "room" */ "../views/Createroom.vue")
+},
+{
+  path: "/room-list",
+  name: "RoomList",
+  component: () =>
+    import(/* webpackChunkName: "room" */ "../views/RoomList.vue")
 }
 ];
 
