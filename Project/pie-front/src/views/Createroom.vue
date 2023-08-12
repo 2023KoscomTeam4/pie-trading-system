@@ -11,6 +11,8 @@
                 :item-value="item => item"
                 label="종목"
                 multiple
+                @input="userInput=null"
+                :search-input.sync="userInput"
             >
               <template #item="{ item }">
                 <v-list-item-content>
@@ -75,6 +77,7 @@ export default{
       userId : "ko1",
       stocklist: [],
       selectedList: [],
+      userInput: null,
     };
   },
   created() {
