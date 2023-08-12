@@ -11,9 +11,12 @@ const routes = [
     name: "DashBoard",
     component: DashBoard
   },
+  { path: '/', 
+    redirect: '/dash-board' 
+  },
   {
     path: "/my-page",
-    name: "myPage",
+    name: "MyPage",
     component: () =>
       import(/* webpackChunkName: "MyPage" */ "../views/MyPage.vue")
   },

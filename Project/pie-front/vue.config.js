@@ -8,7 +8,13 @@ module.exports = defineConfig({
       '/chat': {
         target: 'http://localhost:8081',
         changeOrigin: true
-      }
+      },
+      '/dash-board': {
+        target: 'https://api.finance.naver.com',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+      },
     }
   }
 })
