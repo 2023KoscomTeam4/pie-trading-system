@@ -29,9 +29,7 @@
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
-            
-            <router-link to="/room">
-                    
+            <router-link to="/createroom">
                     <v-list-item>
                         <v-list-item-content>
                             <i class="fas fa-home-user"></i>
@@ -40,11 +38,14 @@
                     </v-list-item>
                 
             </router-link>
+            
 
         </nav>
 </template>
 <script>
 export default {
+    components: { 
+    },
     data: () => ({
         drawer: true
     })
