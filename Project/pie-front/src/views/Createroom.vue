@@ -5,7 +5,7 @@
         </v-card-title>
         <v-container>
             <v-autocomplete
-                v-model = "selected"
+                v-model = "selectedList"
                 :items="stocklist"
                 item-text="stockName"
                 :item-value="item => item"
@@ -13,7 +13,7 @@
                 multiple
             ></v-autocomplete>
         </v-container>
-        <v-card-text v-for="item in selected">
+        <v-card-text v-for="(item, index) in selectedList">
           <v-container>
             <v-row>
               <v-col cols="12">
@@ -24,26 +24,22 @@
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="최소 가격(%)"
-                  hint="시장가 대비 -(입력)%"
-                  required
+                    v-model="item.pricePercent"
+                    label="체결가(시가대비) +/-(%)"
+                    hint="체결가(시가대비) +/-(%)"
+                    :rules="[value => !value || value <= 100 || '값은 100 이하이어야 합니다.']"
+                    required
                 ></v-text-field>
               </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
+              <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="최대 가격(%)"
-                  hint="시장가 대비 +(입력)%"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="매수 수량"
-                  required
+                    v-model="item.orderCnt"
+                    label="소수점 매수수량"
+                    hint="매수수량"
+                    :rules="[value => (value > 0 && value < 1) || '값은 0 이상 1 미만이어야 합니다.']"
+                    type="number"
+                    step="0.01"
+                    required
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -62,8 +58,9 @@ import axios from 'axios'; // axios 라이브러리를 import
 export default{
   data() {
     return {
+      userId : "ko1",
       stocklist: [],
-      selected: [],
+      selectedList: [],
     };
   },
   created() {
@@ -78,21 +75,37 @@ export default{
               });
     },
     createRoom() {
-      if ("" === this.room_name) {
+      if (this.selectedList == null) {
         alert("종목을 선택하세요");
         return;
       } else {
-        var params = new URLSearchParams();
-        params.append("name", this.room_name);
-        axios.post('http://localhost:8081/chat/room', params)
-            .then(
-                response => {
-                  alert(response.data.roomName + "방 개설에 성공하였습니다.");
-                  this.room_name = '';
-                  this.findAllRoom();
+        this.selectedList.forEach((item, index) => {
+
+          var params = new URLSearchParams();
+          params.append("userId", this.userId);
+          params.append("no", item.no);
+          params.append("stockName", item.stockName);
+          params.append("price", item.price);
+          params.append("pricePercent", item.pricePercent); // 이렇게 사용하면 v-model로 연결된 속성을 가져올 수 있습니다.
+          params.append("orderCnt", item.orderCnt);
+
+          axios.post('http://localhost:8081/chat/create-room', params)
+              .then(response => {
+                alert(response.data.stockName + "방 개설에 성공하였습니다.");
+                // 마지막 항목일 경우에만 리디렉션을 수행
+                if (index === this.selectedList.length - 1) {
+                  if (this.selectedList.length >= 2) {
+                    window.location.href = "/room-list"; // 2개 이상일 때
+                  } else {
+                    window.location.href = "/room"; // 1개일 때
+                  }
                 }
-            )
-            .catch(response => { alert("채팅방 개설에 실패하였습니다."); });
+              })
+              .catch(response => {
+                alert(item.stockName + "방 개설에 실패하였습니다.");
+              });
+        });
+
       }
     }
   }
