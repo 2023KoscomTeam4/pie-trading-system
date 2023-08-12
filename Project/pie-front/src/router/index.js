@@ -49,12 +49,6 @@ const routes = [
   name: "RoomList",
   component: () =>
     import(/* webpackChunkName: "room" */ "../views/RoomList.vue")
-},
-{
-  path: "/temp",
-  name: "Temp",
-  component: () =>
-    import(/* webpackChunkName: "temp" */ "../views/Temp.vue")
 }
 ];
 
