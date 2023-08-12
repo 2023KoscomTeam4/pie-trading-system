@@ -17,8 +17,7 @@
 
 <template>
   <v-app>
-    <LandingPage/>
-
+    <CommonNavigation/>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -26,12 +25,12 @@
 </template>
 
 <script>
-import LandingPage from '@/components/LandingPage'
+import CommonNavigation from '@/components/CommonNavigation'
 export default {
   name: "App",
 
   components: {
-    LandingPage,
+    CommonNavigation,
   },
 
   data: () => ({  })};

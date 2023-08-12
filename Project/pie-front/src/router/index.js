@@ -1,21 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import DashBoard from "../views/DashBoard.vue";
 
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/home",
-    name: "Home",
-    component: Home
+    path: "/dash-board",
+    name: "DashBoard",
+    component: DashBoard
   },
   {
-    path: "/about",
-    name: "About",
+    path: "/my-page",
+    name: "myPage",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import(/* webpackChunkName: "MyPage" */ "../views/MyPage.vue")
   },
   {
     path: "/room",
