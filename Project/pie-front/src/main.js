@@ -8,7 +8,6 @@ import VueApexCharts from 'vue-apexcharts'
 
 Vue.config.productionTip = false;
 Vue.use(VueApexCharts)
-
 Vue.component('apexchart', VueApexCharts)
 
 new Vue({
