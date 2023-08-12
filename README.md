@@ -31,4 +31,7 @@
  npm install sockjs-client 
  npm install stomp-websocket
  npm install @stomp/stompjs
+ 2023/08/13
+ npm install --save apexcharts
+ npm install --save vue-apexcharts
 ```
