@@ -12,11 +12,9 @@ import jakarta.persistence.Id;
 @Entity
 public class Member {
 
-    private @Id
+    @Id
     @GeneratedValue
-    @Column(name = "member_id") Long id;
-    private String name;
-    private String username;
-    private String password;
-    private int age;
+    @Column(name = "user_id") Long id;
+    private String userName;
+    private String passWord;
 }

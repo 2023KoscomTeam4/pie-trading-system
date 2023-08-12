@@ -22,7 +22,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation "com.h2database:h2"
+//	implementation "com.h2database:h2"
 	implementation 'org.jsoup:jsoup:1.14.2'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
@@ -35,6 +35,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars:sockjs-client:1.1.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc' // Jdbc, Driver
+	implementation 'com.h2database:h2' // h2 : implementation
 }
 
 tasks.named('test') {

@@ -1,6 +1,7 @@
 <template>
-    <div class="MyPage">
-      <h1>This is an MyPage</h1>
-    </div>
-  </template>
-  
+  <div class="room List">
+    <h1>This is an Mypage</h1>
+  </div>
+</template>
+<script setup>
+</script>

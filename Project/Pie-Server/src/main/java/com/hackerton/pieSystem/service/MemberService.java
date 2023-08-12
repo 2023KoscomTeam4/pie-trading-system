@@ -20,11 +20,8 @@ public class MemberService {
     // GET - 모든 회원 정보 가져오기
     @Transactional(readOnly = true)
     public List<Member> search() {
-
         // 회원 정보를 저장할 배열
         List<MemberResponseDto> memberResponseDto = new ArrayList<>();
-
-
         return repository.findAll();
     }
 
