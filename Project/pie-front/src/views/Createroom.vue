@@ -19,18 +19,10 @@
               <v-col cols="12">
                 {{ item.stockName }}
               </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-card height="70%" hint="시장가">가격</v-card>
+              <v-col cols="12" sm="6" md="4">
+                <v-card height="70%" hint="시장가">가격 {{ item.price }}</v-card>
               </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
+              <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="최소 가격(%)"
                   hint="시장가 대비 -(입력)%"
