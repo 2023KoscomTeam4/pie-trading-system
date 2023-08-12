@@ -6,16 +6,18 @@
         <v-container>
             <v-autocomplete
                 v-model = "selected"
-                :items="['LG생활건강', '삼성바이오로직스', '에코프로']"
+                :items="stocklist"
+                item-text="stockName"
+                :item-value="item => item"
                 label="종목"
                 multiple
             ></v-autocomplete>
         </v-container>
-        <v-card-text v-for="name in selected">
+        <v-card-text v-for="item in selected">
           <v-container>
             <v-row>
               <v-col cols="12">
-                {{ name }}
+                {{ item.stockName }}
               </v-col>
               <v-col
                 cols="12"
@@ -57,30 +59,50 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue-darken-1"
-            variant="text"
-            @click="dialog = false"
-          >
-            주문
-          </v-btn>
-          <v-btn
-            color="blue-darken-1"
-            variant="text"
-            @click="dialog = false"
-          >
-            나가기
-          </v-btn>
+          <v-btn class="orange darken-1" @click="createRoom">주문</v-btn>
         </v-card-actions>
       </v-card>
 </template>
 
 <script>
+import axios from 'axios'; // axios 라이브러리를 import
+
 export default{
-    data () {
-        return {
-            selected: [],
-        }
+  data() {
+    return {
+      stocklist: [],
+      selected: [],
+    };
+  },
+  created() {
+    this.findAllStock();
+  },
+  methods: {
+    findAllStock() {
+      axios.get('http://localhost:8081/kospi/findall')
+          .then(
+              response => {
+                this.stocklist = response.data;
+              });
+    },
+    createRoom() {
+      if ("" === this.room_name) {
+        alert("종목을 선택하세요");
+        return;
+      } else {
+        var params = new URLSearchParams();
+        params.append("name", this.room_name);
+        axios.post('http://localhost:8081/chat/room', params)
+            .then(
+                response => {
+                  alert(response.data.roomName + "방 개설에 성공하였습니다.");
+                  this.room_name = '';
+                  this.findAllRoom();
+                }
+            )
+            .catch(response => { alert("채팅방 개설에 실패하였습니다."); });
+      }
     }
+  }
 }
 </script>

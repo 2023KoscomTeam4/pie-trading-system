@@ -10,12 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import com.hackerton.pieSystem.service.StockService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/kospi")
 public class StockController {
 
     private final StockService stockService;
@@ -25,17 +25,17 @@ public class StockController {
 //        return stockService.getStockSummary(itemCode);
 //    }
 
-    @GetMapping("/kospi/all")
+    @GetMapping("/all")
     public List<KospiStockDto> getKosPiStockList(HttpServletRequest request) {
         return stockService.getKosPiStockList();
     }
 
-    @GetMapping("/kospi/update")
+    @GetMapping("/update")
     public void fetchAndUpdateKospiData(HttpServletRequest request) {
         stockService.fetchAndUpdateKospiData();
     }
 
-    @GetMapping("/kospi/findall")
+    @GetMapping("/findall")
     public List<KospiStock> findAll(HttpServletRequest request) {
         return stockService.findAll();
     }
