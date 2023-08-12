@@ -1,39 +1,71 @@
 <template>
   <v-container fluid :grid-list-md="!$vuetify.breakpoint.xs">
     <v-layout wrap row>
-      <v-flex md12 class="pb-2"
+      <v-flex md12 class="pb-2 clickable"
               v-for="item in roomList"
               :key="item.stockId">
-        <v-card>
+        <router-link :to="'/room/' + item.roomId" tag="div">
+          <v-card>
           <v-container pa-1>
-            <v-layout row>
-              <v-flex xs7>
-                <v-card-title primary-title>
-                  <div>
-                    <h3 class="headline">{{ item.stockName }}</h3>
-                  </div>
-                </v-card-title>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-card outlined>
+                  <v-card-title>
+                    <div>
+                      <h3 class="headline">{{ item.stockName }} ({{ item.no }})</h3>
+                    </div>
+                  </v-card-title>
+                </v-card>
               </v-flex>
-
-              <v-chart type="pie" :options="options" :series="series" />
-
-              <v-flex xs5>
-                <v-card-title primary-title>
-                  <v-avatar>
-                    <v-icon medium color="orange darken-1">person</v-icon>
-                    <div>{{item.personCnt}}</div>
-                  </v-avatar>
-                </v-card-title>
+              <v-flex xs8>
+                <v-card outlined class="pa-3">
+                  <div class="d-flex align-center">
+                    <div>
+                      <h4>{{item.price}}\</h4>
+                      <span class="caption grey--text">&#177;{{item.pricePercent}}%</span>
+                    </div>
+                  </div>
+                </v-card>
+                <v-card outlined class="pa-3">
+                  <div class="d-flex align-center">
+                    <div>
+                      <span class="body-1">{{item.myTradingCnt}}주 구매대기중</span>
+                    </div>
+                  </div>
+                </v-card>
+                <v-card outlined class="pa-3">
+                  <div class="d-flex align-center">
+                    <v-avatar>
+                      <v-icon medium color="orange darken-1">person</v-icon>
+                      <div>{{item.personCnt}}</div>
+                    </v-avatar>
+                  </div>
+                </v-card>
+              </v-flex>
+              <v-flex xs4>
+                <v-card outlined class="d-flex flex-column align-center justify-center">
+                  <v-progress-circular
+                      :rotate="360"
+                      :size="200"
+                      :width="60"
+                      :value="progressValues[item.roomId]"
+                      color="orange darken-1">
+                    <h3>{{ progressValues[item.roomId] }}%</h3>
+                  </v-progress-circular>
+                </v-card>
               </v-flex>
             </v-layout>
+
             <v-divider light></v-divider>
             <v-card-actions class="pa-2">
-              <v-icon small color="primary">update</v-icon>
+              <v-icon small color="orange darken-1">update</v-icon>
               <span class="grey--text caption font-italic">&nbsp;5분전</span>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-container>
         </v-card>
+
+        </router-link>
       </v-flex>
 
     </v-layout>
@@ -48,15 +80,16 @@ export default{
   components: {
     'v-chart': VueApexCharts
   },
+
   data() {
     return {
       userId : "ko1",
       roomList: [],
-      series: [],
-      options: {
-        labels: [],
-      },
+      progressValues: {}
     };
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
   },
   created() {
     this.findAllRoom();
@@ -67,57 +100,30 @@ export default{
           .then(
               response => {
                 this.roomList = response.data;
+                this.roomList.forEach((item) => {
+                  // console.log(item)
+                  this.$set(this.progressValues, item.roomId, 0); // progressValues 초기화
+                  // console.log(this.progressValues)
+                });
                 this.updateSeriesAndLabels(); // series와 labels 업데이트
               });
     },
     updateSeriesAndLabels() {
-      // roomList로부터 series와 labels 추출
-      this.series = this.roomList.map(item => item.roomMemberList?.length || 0);
-      // this.options.labels = this.roomList.map(item => item.userId); // 또는 필요한 라벨
 
-      // 색상 계열을 생성하고 options에 설정
-      this.options.colors = this.generateColors(this.series.length, '#5C4742');
-
-      // 합계를 100%로 만들기 위한 스케일링
-      const sum = this.series.reduce((total, value) => total + value, 0);
-      this.series = this.series.map(value => (value / sum) * 100);
-
-      // 합계가 100% 미만인 경우
-      if (sum < 100) {
-        this.series.push(100 - sum); // 빈칸 부분 추가
-        this.options.labels.push('Empty'); // 라벨 추가
-        this.options.colors.push('#FFFFFF'); // 빈칸 색상 (흰색 또는 원하는 색상)
-      }
-    },
-    generateColors(count, baseColor) {
-      let colors = [];
-      for (let i = 0; i < count; i++) {
-        const color = this.lightenDarkenColor(baseColor, i * 10); // 색상 변경 단계를 조정할 수 있습니다.
-        colors.push(color);
-      }
-      return colors;
-    },
-    lightenDarkenColor(col, amt) {
-      let usePound = false;
-      if (col[0] === '#') {
-        col = col.slice(1);
-        usePound = true;
-      }
-      const num = parseInt(col, 16);
-      let r = (num >> 16) + amt;
-      if (r > 255) r = 255;
-      else if (r < 0) r = 0;
-      let b = ((num >> 8) & 0x00FF) + amt;
-      if (b > 255) b = 255;
-      else if (b < 0) b = 0;
-      let g = (num & 0x0000FF) + amt;
-      if (g > 255) g = 255;
-      else if (g < 0) g = 0;
-      return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
+      this.interval = setInterval(() => {
+        for (const item of this.roomList) {
+          // console.log(this.progressValues[item.roomId])
+          if (this.progressValues[item.roomId] < item.totalPercent) {
+            this.progressValues[item.roomId]++;
+          }
+        }
+      }, 200);
     },
   }
 }
 </script>
-<style lang="">
-
+<style>
+.clickable {
+  cursor: pointer;
+}
 </style>
