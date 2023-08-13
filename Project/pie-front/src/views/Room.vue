@@ -121,10 +121,6 @@
         </v-col>
       </v-layout>
     </v-overlay>
-    <br></br>
-    <v-card>
-      {{ roomData }}
-    </v-card>
   </v-container>
 </template>
 
@@ -187,78 +183,33 @@
               }
             }
           },
+          colors: ['#fb8c00', '#ffb74d', '#ef6c00', '#ffa726', '#fb8c00'],
           fill: {
               opacity: 1
           },
           legend: {
               position: 'top',
               horizontalAlign: 'left',
-              offsetX: 40
+              offsetX: 40,
+              showForSingleSeries: true
           }
       },
-      series: [{
-          name: 'A',
-          data: [40]
-      }, {
-          name: 'B',
-          data: [30]
-      }],
+      series: [],
       stockInfo:[],
       array: [5, 4, 3, 2, 1, 0, -1, -2, -3, -4],
-      /*
-      stock: [
-        {
-          price: 10500,
-          ind: 1,
-        },
-        {
-          price: 10400,
-          ind: 2,
-        },
-        {
-          price: 10300,
-          ind: 3,
-        },
-        {
-          price: 10200,
-          ind: 4,
-        },
-        {
-          price: 10100,
-          ind: 5,
-        },
-        {
-          price: 10000,
-          ind: 6,
-        },
-        {
-          price: 9900,
-          ind: 7,
-        },
-        {
-          price: 9800,
-          ind: 8,
-        },
-        {
-          price: 9700,
-          ind: 9,
-        },
-        {
-          price: 9600,
-          ind: 10,
-        },
-      ],*/
       exit: false,
       buy: false,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
     },
     created() {
       this.fetchRoomData();
+      // 참여 현황을 위한 series 데이터 업데이트
 
       // 호가 정보를 1초마다 업데이트
       setInterval(this.fetchStockData, 1000);
+
       // 참여 퍼센테이지 합계 1초마다 업데이트
-      setInterval(this.buy_function, 1000);
+      setInterval(this.percent_update, 1000);
     },
     methods: {
       async fetchRoomData() {
@@ -306,12 +257,16 @@
         }
       },
       // 참여 퍼센테이지가 100% 이상이 되면 buy 변수를 true로 변경
-      buy_function() {
-        //alert(this.roomData.roomMemberList.values())
+      percent_update () {
         var total = 0;
+        this.series = []
         // roomData에서 personPercent 전체 합계 계산
         for (var mem in this.roomData.roomMemberList) {
           total = total + this.roomData.roomMemberList[mem].personPercent;
+          this.series.push({
+            name: this.roomData.roomMemberList[mem].userId,
+            data: [this.roomData.roomMemberList[mem].personPercent]
+          });
         }
         if (total >= 100) {
           this.buy = true;
@@ -324,7 +279,7 @@
       // 방 나가기
       exitRoom() {
         window.location.href = "/room-list/"+this.userId; // 방 리스트 화면으로 이동
-      }
+      },
     },
   }
 </script>
