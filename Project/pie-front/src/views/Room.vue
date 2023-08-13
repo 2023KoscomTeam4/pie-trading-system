@@ -248,8 +248,8 @@
           ind: 10,
         },
       ],*/
-      exit: true,
-      buy: true,  // 100%가 되어 체결되었는지 나타내는 bool 변수
+      exit: false,
+      buy: false,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
     },
     created() {
@@ -307,10 +307,11 @@
       },
       // 참여 퍼센테이지가 100% 이상이 되면 buy 변수를 true로 변경
       buy_function() {
+        //alert(this.roomData.roomMemberList.values())
         var total = 0;
         // roomData에서 personPercent 전체 합계 계산
-        for (var mem in this.roomData) {
-          total = total + mem.personPercent;
+        for (var mem in this.roomData.roomMemberList) {
+          total = total + this.roomData.roomMemberList[mem].personPercent;
         }
         if (total >= 100) {
           this.buy = true;
@@ -318,6 +319,7 @@
         else {
           this.buy = false;
         }
+        return total
       }
     },
   }
