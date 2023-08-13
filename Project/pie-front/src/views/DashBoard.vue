@@ -110,21 +110,21 @@
 
   
   <v-flex>    
-    <v-row no-gutter>    
-      <v-col cols="12" md="4">
+    <v-row>    
+      <v-col cols="5" md="4">
         <v-row>
-          <v-col cols="12" md="2">
+          <v-col cols="5" md="2">
             <v-card height="80px" width="10px" color="orange darken-1"></v-card>
           </v-col>
-          <v-col cols="12" md="10">            
+          <v-col cols="5" md="10">            
             <v-list two-line="" subheader="" class="ml-n8" >
               <v-list-item>
                 <v-list-item-avatar size="60" >
                     <v-icon color="orange darken-3">fas fa-sort-up</v-icon>  
                 </v-list-item-avatar>
                 <v-list-item-content>                    
-                    <v-list-item-subtitle>삼성전자</v-list-item-subtitle>
-                    <v-list-item-title>68,000원</v-list-item-title>                    
+                    <v-list-item-subtitle>{{stock_title}}</v-list-item-subtitle>
+                    <v-list-item-title>{{stock_price}}원</v-list-item-title>                    
                 </v-list-item-content>
                 
               </v-list-item>
@@ -133,12 +133,12 @@
         </v-row>
       </v-col>
 
-      <v-col cols="12" md="4">
+      <v-col cols="9" md="4">
         <v-row>
-          <v-col cols="12" md="2">
+          <v-col cols="5" md="2">
             <v-card height="80px" width="10px" color="orange darken-1"></v-card>
           </v-col>
-          <v-col cols="12" md="10">
+          <v-col cols="5" md="10">
             <v-list two-line subheader class="ml-n8">
               <v-list-item>
                 <v-list-item-avatar size="60" >
@@ -154,7 +154,7 @@
         </v-row>
       </v-col>
       
-      <v-col cols="12" md="4">
+      <v-col cols="9" md="4">
         <v-row>
           <v-col cols="12" md="2">
             <v-card height="80px" width="10px" color="orange darken-1"></v-card>
@@ -224,7 +224,8 @@
 
 <script>
 import axios from 'axios'
-// import stock from '../util/stock.js'
+import { encoding_key } from '../env/api'
+import {findStock} from '../util/stock.js'
 import * as news from '../util/news.js'
 import list from '../assets/data/news.json'
 
@@ -239,37 +240,6 @@ export default {
       { text: '뉴스사', value: 'author' }
     ],
     list: list,
-    //   {
-    //     type: '국내주식',
-    //     stockNm: '삼성전자',
-    //     valEvalu: '880,000원',
-    //     earningRate: '25.71%',
-    //     profit: '180,000원',
-    //     qty: 10,
-    //     valTrade: '70,000원',
-    //     valstock: '88,000원',
-    //   },
-    //   {
-    //     type: '국내주식',
-    //     stockNm: '대한항공',
-    //     valEvalu: '303000원',
-    //     earningRate: '21.20%',
-    //     profit: '53,000원',
-    //     qty: 10,
-    //     valTrade: '25,000원',
-    //     valstock: '30,300원',
-    //   },
-    //   {
-    //     type: '국내주식',
-    //     stockNm: '기아차',
-    //     valEvalu: '892,000원',
-    //     earningRate: '4.94%',
-    //     profit: '42,000원',
-    //     qty: 10,
-    //     valTrade: '85,000원',
-    //     valstock: '89,200원',
-    //   },
-      
     name: '콤이',
     grade: '중급 투자자',
     age: '28',
@@ -277,23 +247,74 @@ export default {
     investOpt: '3등급 (중위험)',
     salary: '5800만원',
     property: '1억 2천5백',
+    stock_title: '삼성전자',
+    stock_price: 68000,
+    itemsName : [{
+  stockName: "삼성전자"},
+{
+  stockName: "POSCO홀딩스"
+},{
+  stockName: "비츠로테크"
+},{
+  stockName: "에코프로"
+},{
+  stockName: "금양"
+},{
+  stockName: "카카오"
+},{
+  stockName: "NAVER"
+},{
+  stockName: "신성이엔지"
+},{
+  stockName: "SK하이닉스"
+},{
+  stockName: "셀트리온"
+},{
+  stockName: "현대차"
+},{
+  stockName: "NH투자증권"
+},{
+  stockName: "마녀공장"
+},
+]
+    
   }),
   created(){
   //   axios.get(''')
   //     .then(res => {
   //       // console.log(res.data);
-    // console.log(stock('000020'));
-    
-  },
-  mounted(){
-    // console.log("")
-    // console.log(news.fetchNews())
   },
   methods: {
-    // stock,
-    // news
-  }
+    stock () {
+      setInterval(() => {
+        var num = Math.floor(Math.random() * (13 - 0) + 0);
+        console.log('33333', this.itemsName[num].stockName)
+        axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${this.itemsName[num].stockName}&numOfRows=1&resultType=json`)
+        .then(res => {
+        var stockLists = res.data.response.body.items.item[0];
+        console.log('2222', stockLists);
+        return stockLists;
+      })
+    .catch(err => {
+      console.log('err', err);
+    })
+      }
+      , 8000);
+    }
+  },
+  mounted(){
+    // console.log(stock.length)
+    // console.log(news.fetchNews())
+    this.stock()
+    
+    
+  },
+ 
+
 }
+
+
+
 </script>
 
 
