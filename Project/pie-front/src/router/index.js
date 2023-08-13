@@ -1,18 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import DashBoard from "../views/DashBoard.vue";
+// import DashBoard from "../views/DashBoard.vue";
 
 
 Vue.use(VueRouter);
 
 const routes = [
+  { path: '/', 
+    redirect: '/dash-board' 
+  },
   {
     path: "/dash-board",
     name: "DashBoard",
-    component: DashBoard
-  },
-  { path: '/', 
-    redirect: '/dash-board' 
+    component: () => import(/* webpackChunkName: "DashBoard" */ "../views/DashBoard.vue")
+    // component: DashBoard
   },
   {
     path: "/my-page",

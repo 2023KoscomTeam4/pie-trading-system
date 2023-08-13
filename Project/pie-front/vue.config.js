@@ -9,12 +9,12 @@ module.exports = defineConfig({
         target: 'http://localhost:8081',
         changeOrigin: true
       },
-      '/dash-board': {
-        target: 'https://api.finance.naver.com',
-        ws: true,
-        changeOrigin: true,
-        secure: false,
-      },
+      // '/dash-board': {
+      //   target: 'https://api.finance.naver.com',
+      //   ws: true,
+      //   changeOrigin: true,
+      //   secure: false,
+      // },
     }
   }
 })

@@ -204,7 +204,7 @@
                 </v-card-title> -->
                 <v-data-table
                   :headers="headers"
-                  :items="Stock"
+                  :items="list"
                   :search="search"
                 ></v-data-table>
               </v-card>
@@ -224,7 +224,9 @@
 
 <script>
 import axios from 'axios'
-import stock from '../util/stock.js'
+// import stock from '../util/stock.js'
+import * as news from '../util/news.js'
+import list from '../assets/data/news.json'
 
 export default {
   name: "DashBoard",
@@ -232,10 +234,11 @@ export default {
     today: new Date().toLocaleDateString(),
     search: '',
     headers: [
-      { text: 'NO', align: 'start', sortable: false, value: 'assertType'},
-      { text: '뉴스 제목', value: 'title' }
+      { text: '목차', sortable: false, value: 'NO'},
+      { text: '뉴스 제목', value: 'title' },
+      { text: '뉴스사', value: 'author' }
     ],
-    Stock: [],
+    list: list,
     //   {
     //     type: '국내주식',
     //     stockNm: '삼성전자',
@@ -279,10 +282,16 @@ export default {
   //   axios.get(''')
   //     .then(res => {
   //       // console.log(res.data);
-    console.log(stock('000020'))
+    // console.log(stock('000020'));
+    
+  },
+  mounted(){
+    // console.log("")
+    // console.log(news.fetchNews())
   },
   methods: {
-    stock
+    // stock,
+    // news
   }
 }
 </script>
