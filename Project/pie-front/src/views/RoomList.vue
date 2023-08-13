@@ -4,7 +4,7 @@
       <v-flex md12 class="pb-2 clickable"
               v-for="item in roomList"
               :key="item.stockId">
-        <router-link :to="'/room/' + item.roomId" tag="div">
+        <router-link :to="'/room/' + this.userId +'/'+ item.roomId" tag="div">
           <v-card>
           <v-container pa-1>
             <v-layout row wrap>

@@ -52,8 +52,18 @@ public class ChatService {
     }
 
     //채팅방 하나 불러오기
-    public ChatRoom findById(String roomId) {
-        return chatRooms.get(roomId);
+    public ChatRoom findById(String userId, String roomId) {// roomId로 채팅방 찾기
+        ChatRoom chatRoom = RoomMemberResponseDto.findByRoomId(roomId).orElse(null);
+        List<RoomMember> roomMembers = roomMemberRepository.findByUserId(userId);
+        List<RoomMember> roomMemberList = roomMemberRepository.findByRoomId(roomMember.getRoomId());
+
+        // 채팅방 소유자 확인 (가정: ChatRoom에 사용자 ID가 포함되어 있음)
+        if (chatRoom != null && chatRoom.getUserId().equals(userId)) {
+            return chatRoom;
+        } else {
+            // 채팅방이 없거나 사용자 ID가 일치하지 않는 경우
+            throw new IllegalArgumentException("채팅방을 찾을 수 없습니다.");
+        }
     }
 
     //채팅방 생성

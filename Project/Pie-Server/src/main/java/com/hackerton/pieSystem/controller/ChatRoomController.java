@@ -46,10 +46,11 @@ public class ChatRoomController {
     }
 
     // 특정 채팅방 조회
-    @GetMapping("/room/{roomId}")
+    @GetMapping("/room/{userId}/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
+    public ChatRoom roomInfo(@PathVariable String userId
+                            , @PathVariable String roomId) {
 
-        return chatService.findById(roomId);
+        return chatService.findById(userId, roomId);
     }
 }

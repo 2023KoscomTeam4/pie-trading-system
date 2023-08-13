@@ -53,6 +53,7 @@
     },
     data () {
       return {
+        roomData: null, // API에서 가져온 데이터 저장
         chartOptions: {
           chart: {
               type: 'bar',
@@ -159,6 +160,21 @@
           },
         ],
       }
+    },
+    created() {
+      this.fetchRoomData();
+    },
+    methods: {
+      async fetchRoomData() {
+        try {
+          const roomId = this.$route.params.roomId; // URL에서 roomId 가져오기
+          const response = await axios.get(`http://localhost:8081/room/${userId}/${roomId}`);
+          this.roomData = response.data; // 데이터를 로컬 상태에 저장
+        } catch (error) {
+          console.error("Error fetching room data:", error);
+          // 오류 처리 (예: 사용자에게 오류 메시지 표시)
+        }
+      },
     },
   }
 
