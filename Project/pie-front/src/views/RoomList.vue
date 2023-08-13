@@ -29,7 +29,8 @@
                 <v-card outlined class="pa-3">
                   <div class="d-flex align-center">
                     <div>
-                      <span class="body-1">{{item.myTradingCnt}}주({{item.myPersonPercent}}%) 구매대기중</span>
+                      <span class="body-1 font-weight-bold">{{item.myTradingCnt}}주
+                        <span class="caption grey--text">{{item.totalPercent}}({{item.myPersonPercent}})/100% 구매대기중</span></span>
                     </div>
                   </div>
                 </v-card>
@@ -37,7 +38,7 @@
                   <div class="d-flex align-center">
                     <v-avatar>
                       <v-icon medium color="orange darken-1">person</v-icon>
-                      <div>{{item.personCnt}}</div>
+                      <div class="body-1 font-weight-bold">{{item.personCnt}}</div>
                     </v-avatar>
                   </div>
                 </v-card>

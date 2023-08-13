@@ -20,4 +20,5 @@ public class RoomMember {
     @Column  Integer pricePercent;
     @Column  Double tradingCnt;
     @Column  Integer personPercent;
+    @Column  String contractCmpYn;
 }

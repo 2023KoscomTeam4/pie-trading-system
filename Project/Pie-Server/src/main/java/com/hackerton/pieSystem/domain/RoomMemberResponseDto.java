@@ -25,6 +25,7 @@ public class RoomMemberResponseDto {
     private String myUserId;
     private Double myTradingCnt;
     private Integer myPersonPercent;
+    private String myContractCmpYn;
     private List<RoomMember> roomMemberList;
     // 기타 Room과 RoomMember의 정보 필드
 
@@ -41,7 +42,8 @@ public class RoomMemberResponseDto {
         this.myUserId = roomMember.getUserId();
         this.myTradingCnt = roomMember.getTradingCnt();
         this.myPersonPercent = roomMember.getPersonPercent();
-        this.roomMemberList =roomMemberList;
+        this.myContractCmpYn = roomMember.getContractCmpYn();
+        this.roomMemberList = roomMemberList;
         Integer priceValue = Integer.parseInt(this.price.replaceAll(",", ""));
         this.minPrice = (int) (priceValue - priceValue * (this.pricePercent / 100.0));
         this.maxPrice = (int) (priceValue + priceValue * (this.pricePercent / 100.0));

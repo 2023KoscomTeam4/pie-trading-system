@@ -77,9 +77,17 @@ public class ChatService {
         roomMember.setPricePercent(pricePercent);
         roomMember.setTradingCnt(orderCnt);
         roomMember.setPersonPercent(personPercent);
+        roomMember.setContractCmpYn("N");
         roomMember = roomMemberRepository.save(roomMember);
         chatRoom.setMyRoomMemberId(roomMember.getId());
 
+        if(room.getTotalPercent()>=100){
+            List<RoomMember> roomMembers = roomMemberRepository.findByRoomIdAndContractCmpYn(chatRoom.getRoomId(),"N");
+            for (RoomMember rm : roomMembers) {
+                rm.setContractCmpYn("Y");
+                roomMemberRepository.save(rm);
+            }
+        }
         chatRooms.put(chatRoom.getRoomId(), chatRoom);
         return chatRoom;
     }
@@ -90,7 +98,7 @@ public class ChatService {
 //        List<RoomDto> result = new ArrayList<>(chatRooms.values());
 //        Collections.reverse(result);
 
-        List<RoomMember> roomMembers = roomMemberRepository.findByUserId(userId);
+        List<RoomMember> roomMembers = roomMemberRepository.findByUserIdAndContractCmpYn(userId,"N");
         List<RoomMemberResponseDto> result = new ArrayList<>();
 
         for (RoomMember roomMember : roomMembers) {
@@ -108,18 +116,17 @@ public class ChatService {
 //        //roomId로 채팅방 찾기
 //        return chatRooms.get(roomId);
 
-        RoomMemberResponseDto result = new RoomMemberResponseDto();
-        RoomMember selectedRoom = roomMemberRepository.findByUserIdAndId(userId, roomMemberId);
+        RoomMember selectedRoom = roomMemberRepository.findById(roomMemberId);
         Room room = roomRepository.findByRoomId(selectedRoom.getRoomId());
         List<RoomMember> roomMemberList = roomMemberRepository.findByRoomId(selectedRoom.getRoomId());
-        result = new RoomMemberResponseDto(selectedRoom, room, roomMemberList);
+        RoomMemberResponseDto result = new RoomMemberResponseDto(selectedRoom, room, roomMemberList);
 
         // 채팅방 소유자 확인 (가정: RoomDto에 사용자 ID가 포함되어 있음)
         if (selectedRoom != null && selectedRoom.getUserId().equals(userId)) {
             return result;
         } else {
             // 채팅방이 없거나 사용자 ID가 일치하지 않는 경우
-            throw new IllegalArgumentException("채팅방을 찾을 수 없습니다.");
+            throw new IllegalArgumentException("방을 찾을 수 없습니다.");
         }
     }
 

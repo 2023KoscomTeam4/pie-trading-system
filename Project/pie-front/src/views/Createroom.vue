@@ -112,7 +112,7 @@ export default{
                 // 마지막 항목일 경우에만 리디렉션을 수행
                 if (index === this.selectedList.length - 1) {
                   if (this.selectedList.length >= 2) {
-                    window.location.href = "/room-list"; // 2개 이상일 때
+                    window.location.href = "/room-list/"+this.userId; // 2개 이상일 때
                   } else {
                     window.location.href = "/room/"+this.userId+"/"+response.data.myRoomMemberId; // 1개일 때
                   }
