@@ -1,44 +1,33 @@
-const request = require("request");
-const cheerio = require("cheerio");
-const iconv = require("iconv-lite");
+import axios from 'axios';
 
-const getNews = () => {
-  request(
-  {
-    url: "https://news.naver.com/",
-    method: "GET",
-    encoding: null,
-  },
-  (error, response, body) => {
-    if (error) {
-      console.error(error);
-      return;
-    }
-    if (response.statusCode === 200) {
-      console.log("response ok");
-      const bodyDecoded = iconv.decode(body, "euc-kr");
-      const $ = cheerio.load(bodyDecoded);
-
-      const list_text_inner_arr = $(
-        "#_rankingList0 > li > div > div > div"
-      ).toArray();
-
-      const result = [];
-      list_text_inner_arr.forEach((div) => {
-        const aFirst = $(div).find("a").first(); // 첫번째 <a> 태그
-        const path = aFirst.attr("href"); // 첫번째 <a> 태그 url
-        const url = `https://news.naver.com/${path}`; // 도메인을 붙인 url 주소
-        const title = aFirst.text().trim();
-
-        const aLast = $(div).find("a").last(); // <두번째(마지막) <a>태그
-        const author = aLast.text().trim();
-        result.push({
-          url,
-          title,
-          author,
-        });
-      });
-      console.log(result);
-    }
-  });
+const config = {
+  baseUrl: 'https://openapi.naver.com/v1/'
 };
+
+function fetchNews() {
+  return axios.get(`${config.baseUrl}search/news.json`);
+}
+
+function fetchAsk() {
+  return axios.get(`${config.baseUrl}ask/1.json`);
+}
+
+function fetchJobs() {
+  return axios.get(`${config.baseUrl}jobs/1.json`);
+}
+
+function fetchUser(id) {
+  return axios.get(`${config.baseUrl}user/${id}.json`);
+}
+
+function fetchItem(id) {
+  return axios.get(`${config.baseUrl}item/${id}.json`);
+}
+
+export {
+  fetchNews,
+  fetchAsk,
+  fetchJobs,
+  fetchUser,
+  fetchItem
+}
