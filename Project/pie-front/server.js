@@ -22,7 +22,7 @@ app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, '/dist/index.html'));  
 })
 
-var server_port = process.env.PORT || 3000
+var server_port = process.env.PORT || 80
 app.listen(server_port);
 console.log( "Listening on port " + server_port );
 
