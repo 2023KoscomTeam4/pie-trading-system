@@ -6,7 +6,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChatRoom {
+public class RoomDto {
 
     private String roomId;
     private String no;
@@ -15,10 +15,11 @@ public class ChatRoom {
     private Integer pricePercent;
     private Integer personCnt;
     private Integer totalPercent;
+    private String myRoomMemberId;
 
 
-    public static ChatRoom create(String no, String stockName, String price, Integer pricePercent, Integer personPercent ) {
-        ChatRoom room = new ChatRoom();
+    public static RoomDto create(String no, String stockName, String price, Integer pricePercent, Integer personPercent ) {
+        RoomDto room = new RoomDto();
         room.roomId = UUID.randomUUID().toString();
         room.no = no;
         room.stockName = stockName;

@@ -3,7 +3,7 @@
     <!-- 종목명-------------------------------------------->
     <v-row>
       <v-col cols="12">
-        <v-card class="pa-3 text-center">{{ roomData.stockName }}</v-card>
+        <v-card class="pa-3 text-center">{{ roomData.stockName }} (\{{ roomData.price }} <span class="caption grey--text">&#177;{{roomData.pricePercent}}%</span>)</v-card>
       </v-col>
     </v-row>
     <v-row>

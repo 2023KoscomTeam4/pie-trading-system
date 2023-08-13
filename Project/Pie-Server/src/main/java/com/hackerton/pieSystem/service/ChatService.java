@@ -1,6 +1,6 @@
 package com.hackerton.pieSystem.service;
 
-import com.hackerton.pieSystem.domain.ChatRoom;
+import com.hackerton.pieSystem.domain.RoomDto;
 import com.hackerton.pieSystem.domain.Room;
 import com.hackerton.pieSystem.domain.RoomMember;
 import com.hackerton.pieSystem.domain.RoomMemberResponseDto;
@@ -26,7 +26,7 @@ public class ChatService {
     private RoomRepository roomRepository;
     @Autowired
     private RoomMemberRepository roomMemberRepository;
-    private Map<String, ChatRoom> chatRooms;
+    private Map<String, RoomDto> chatRooms;
 
     @PostConstruct
     //의존관게 주입완료되면 실행되는 코드
@@ -36,16 +36,16 @@ public class ChatService {
 
     //채팅방 생성
     @Transactional
-    public ChatRoom createRoom(String userId, String no, String stockName, String price, Integer pricePercent, Double orderCnt ) {
+    public RoomDto createRoom(String userId, String no, String stockName, String price, Integer pricePercent, Double orderCnt ) {
         Integer personPercent = (int)(orderCnt*100);
 
         List<Room> roomList = null;
         Room room = null;
         roomList = roomRepository.findRoomByNoAndPriceAndPricePercent(no, price, pricePercent);
-        ChatRoom chatRoom = new ChatRoom();
-        if(roomList == null || StringUtil.isBlank(roomList.get(0).getRoomId())) {
+        RoomDto chatRoom = new RoomDto();
+        if(roomList == null || roomList.size() < 1) {
             //같은 no(주식번호), price(가격), pricePercent(가격범위)가 없는 경우,
-            chatRoom = ChatRoom.create(no, stockName, price, pricePercent, personPercent);
+            chatRoom = RoomDto.create(no, stockName, price, pricePercent, personPercent);
             room = new Room();
             room.setRoomId(chatRoom.getRoomId());
             room.setNo(chatRoom.getNo());
@@ -77,7 +77,8 @@ public class ChatService {
         roomMember.setPricePercent(pricePercent);
         roomMember.setTradingCnt(orderCnt);
         roomMember.setPersonPercent(personPercent);
-        roomMemberRepository.save(roomMember);
+        roomMember = roomMemberRepository.save(roomMember);
+        chatRoom.setMyRoomMemberId(roomMember.getId());
 
         chatRooms.put(chatRoom.getRoomId(), chatRoom);
         return chatRoom;
@@ -86,7 +87,7 @@ public class ChatService {
     //채팅방 불러오기
     public List<RoomMemberResponseDto> findAllRoom(String userId) {
 //        //채팅방 최근 생성 순으로 반환
-//        List<ChatRoom> result = new ArrayList<>(chatRooms.values());
+//        List<RoomDto> result = new ArrayList<>(chatRooms.values());
 //        Collections.reverse(result);
 
         List<RoomMember> roomMembers = roomMemberRepository.findByUserId(userId);
@@ -113,7 +114,7 @@ public class ChatService {
         List<RoomMember> roomMemberList = roomMemberRepository.findByRoomId(selectedRoom.getRoomId());
         result = new RoomMemberResponseDto(selectedRoom, room, roomMemberList);
 
-        // 채팅방 소유자 확인 (가정: ChatRoom에 사용자 ID가 포함되어 있음)
+        // 채팅방 소유자 확인 (가정: RoomDto에 사용자 ID가 포함되어 있음)
         if (selectedRoom != null && selectedRoom.getUserId().equals(userId)) {
             return result;
         } else {

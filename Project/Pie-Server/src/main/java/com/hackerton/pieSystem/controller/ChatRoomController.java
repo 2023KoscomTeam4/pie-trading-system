@@ -1,6 +1,6 @@
 package com.hackerton.pieSystem.controller;
 
-import com.hackerton.pieSystem.domain.ChatRoom;
+import com.hackerton.pieSystem.domain.RoomDto;
 import com.hackerton.pieSystem.domain.Room;
 import com.hackerton.pieSystem.domain.RoomMemberResponseDto;
 import com.hackerton.pieSystem.service.ChatService;
@@ -21,7 +21,7 @@ public class ChatRoomController {
     // 채팅방 생성
     @PostMapping("/create-room")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String userId
+    public RoomDto createRoom(@RequestParam String userId
             , @RequestParam String no
             , @RequestParam String stockName
             , @RequestParam String price

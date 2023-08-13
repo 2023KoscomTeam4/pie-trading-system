@@ -21,7 +21,7 @@
                 <v-card outlined class="pa-3">
                   <div class="d-flex align-center">
                     <div>
-                      <h4>{{item.price}}\</h4>
+                      <h4>\{{item.price}}</h4>
                       <span class="caption grey--text">&#177;{{item.pricePercent}}%</span>
                     </div>
                   </div>
