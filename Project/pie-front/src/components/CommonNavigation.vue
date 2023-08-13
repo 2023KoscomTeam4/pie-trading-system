@@ -21,14 +21,14 @@
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item router to="/room-list">
+                <v-list-item router to="/room-list/ko1">
                         <v-list-item-content>
                         <v-icon class="mb-2">fas fa-list</v-icon>
                             <v-list-item-subtitle>방 목록</v-list-item-subtitle>
                         </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item router to="/room-create">
+                <v-list-item router to="/room-create/ko1">
                         <v-list-item-content>
                         <v-icon class="mb-2">fas fa-search</v-icon>
                             <v-list-item-subtitle>방 생성</v-list-item-subtitle>
