@@ -28,21 +28,21 @@ CREATE TABLE KOSPI_STOCK
 
 DROP TABLE IF EXISTS ROOM;
 CREATE TABLE ROOM (
-      ROOM_ID VARCHAR(255) PRIMARY KEY,
-      NO VARCHAR(255),
-      STOCK_NAME VARCHAR(255),
-      PRICE VARCHAR(255),
-      PRICE_PERCENT NUMBER,
-      PERSON_CNT NUMBER,
-      TOTAL_PERCENT NUMBER
+                      ROOM_ID VARCHAR(255) PRIMARY KEY,
+                      NO VARCHAR(255),
+                      STOCK_NAME VARCHAR(255),
+                      PRICE VARCHAR(255),
+                      PRICE_PERCENT INT,
+                      PERSON_CNT INT,
+                      TOTAL_PERCENT INT
 );
 
 DROP TABLE IF EXISTS ROOM_MEMBER;
 CREATE TABLE Room_Member (
-        room_member_id VARCHAR(255) PRIMARY KEY,
-        room_id VARCHAR(255),
-        user_id VARCHAR(255),
-        price_percent NUMBER,
-        trading_cnt DOUBLE,
-        person_percent NUMBER
+                             room_member_id VARCHAR(255) PRIMARY KEY,
+                             room_id VARCHAR(255),
+                             user_id VARCHAR(255),
+                             price_percent INT,
+                             trading_cnt DOUBLE,
+                             person_percent INT
 );

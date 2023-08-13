@@ -74,7 +74,7 @@ import axios from 'axios'; // axios 라이브러리를 import
 export default{
   data() {
     return {
-      userId : "ko1",
+      userId : this.$route.params.userId,
       stocklist: [],
       selectedList: [],
       userInput: null,

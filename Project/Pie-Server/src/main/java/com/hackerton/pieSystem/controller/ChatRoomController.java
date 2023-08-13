@@ -1,6 +1,7 @@
 package com.hackerton.pieSystem.controller;
 
 import com.hackerton.pieSystem.domain.ChatRoom;
+import com.hackerton.pieSystem.domain.Room;
 import com.hackerton.pieSystem.domain.RoomMemberResponseDto;
 import com.hackerton.pieSystem.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -21,20 +22,13 @@ public class ChatRoomController {
     @PostMapping("/create-room")
     @ResponseBody
     public ChatRoom createRoom(@RequestParam String userId
-            ,@RequestParam String no
-            ,@RequestParam String stockName
-            ,@RequestParam String price
-            ,@RequestParam Integer pricePercent
-            ,@RequestParam Double orderCnt ) {
+            , @RequestParam String no
+            , @RequestParam String stockName
+            , @RequestParam String price
+            , @RequestParam Integer pricePercent
+            , @RequestParam Double orderCnt ) {
 
         return chatService.createRoom(userId, no, stockName, price, pricePercent, orderCnt);
-    }
-
-    // 채팅방 입장 화면
-    @GetMapping("/room/enter/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId) {
-        model.addAttribute("roomId", roomId);
-        return "redirect:http://localhost:3000/room";
     }
 
     // 모든 채팅방 목록 반환
@@ -45,12 +39,19 @@ public class ChatRoomController {
         return chatService.findAllRoom(userId);
     }
 
-    // 특정 채팅방 조회
-    @GetMapping("/room/{userId}/{roomId}")
-    @ResponseBody
-    public void roomInfo(@PathVariable String userId
-                            , @PathVariable String roomId) {
 
-//        return chatService.findById(userId, roomId);
+    // 특정 채팅방 조회
+    @GetMapping("/room/{userId}/{roomMemberId}")
+    @ResponseBody
+    public RoomMemberResponseDto roomInfo(@PathVariable String userId
+                            , @PathVariable String roomMemberId) {
+        return chatService.findById(userId, roomMemberId);
+    }
+
+    // 채팅방 입장 화면
+    @GetMapping("/room/enter/{roomId}")
+    public String roomDetail(Model model, @PathVariable String roomId) {
+        model.addAttribute("roomId", roomId);
+        return "redirect:http://localhost:3000/room";
     }
 }

@@ -4,7 +4,7 @@
       <v-flex md12 class="pb-2 clickable"
               v-for="item in roomList"
               :key="item.stockId">
-        <router-link :to="'/room/' + userId +'/'+ item.roomId" tag="div">
+        <router-link :to="'/room/' + userId +'/'+ item.myRoomMemberId" tag="div">
           <v-card>
           <v-container pa-1>
             <v-layout row wrap>
@@ -29,7 +29,7 @@
                 <v-card outlined class="pa-3">
                   <div class="d-flex align-center">
                     <div>
-                      <span class="body-1">{{item.myTradingCnt}}주 구매대기중</span>
+                      <span class="body-1">{{item.myTradingCnt}}주({{item.myPersonPercent}}%) 구매대기중</span>
                     </div>
                   </div>
                 </v-card>
@@ -44,14 +44,27 @@
               </v-flex>
               <v-flex xs4>
                 <v-card outlined class="d-flex flex-column align-center justify-center">
-                  <v-progress-circular
-                      :rotate="360"
-                      :size="200"
-                      :width="60"
-                      :value="progressValues[item.roomId]"
-                      color="orange darken-1">
-                    <h3>{{ progressValues[item.roomId] }}%</h3>
-                  </v-progress-circular>
+                  <div style="position: relative; width: 200px; height: 200px;">
+                    <v-progress-circular
+                        :rotate="360"
+                        :size="200"
+                        :width="60"
+                        :value="progressValues[item.roomId]"
+                        color="red darken-1"
+                        style="position: absolute;">
+                    </v-progress-circular>
+                    <v-progress-circular
+                        :rotate="360"
+                        :size="200"
+                        :width="60"
+                        :value="item.myPersonPercent"
+                        color="orange darken-1"
+                        style="position: absolute;">
+                    </v-progress-circular>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                      <h3>{{ progressValues[item.roomId] }}%</h3>
+                    </div>
+                  </div>
                 </v-card>
               </v-flex>
             </v-layout>
@@ -83,7 +96,7 @@ export default{
 
   data() {
     return {
-      userId : "ko1",
+      userId : this.$route.params.userId,
       roomList: [],
       progressValues: {}
     };

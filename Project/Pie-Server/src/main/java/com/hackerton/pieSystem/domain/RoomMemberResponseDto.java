@@ -11,11 +11,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class RoomMemberResponseDto {
+
     private String roomId;
     private String no;
     private String stockName;
     private String price;
     private Integer pricePercent;
+    private Integer minPrice;
+    private Integer maxPrice;
     private Integer personCnt;
     private Integer totalPercent;
     private String myRoomMemberId;
@@ -39,6 +42,9 @@ public class RoomMemberResponseDto {
         this.myTradingCnt = roomMember.getTradingCnt();
         this.myPersonPercent = roomMember.getPersonPercent();
         this.roomMemberList =roomMemberList;
+        Integer priceValue = Integer.parseInt(this.price.replaceAll(",", ""));
+        this.minPrice = (int) (priceValue - priceValue * (this.pricePercent / 100.0));
+        this.maxPrice = (int) (priceValue + priceValue * (this.pricePercent / 100.0));
     }
 
 }

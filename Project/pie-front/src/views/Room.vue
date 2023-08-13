@@ -3,7 +3,7 @@
     <!-- 종목명-------------------------------------------->
     <v-row>
       <v-col cols="12">
-        <v-card class="pa-3 text-center">삼성전자</v-card>
+        <v-card class="pa-3 text-center">{{ roomData.stockName }}</v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -25,7 +25,7 @@
       </v-col>
       <v-col cols="4">
         <!-- 소수점 매매 거래 range 최소-------------------------------------------->
-        <v-card class="pa-3 text-center">최소가격:9000</v-card>
+        <v-card class="pa-3 text-center">최소가격:{{ roomData.minPrice }}</v-card>
         <v-row>
           <v-col cols="10">
             <br></br>
@@ -36,7 +36,7 @@
       </v-col>
       <v-col cols="4">
         <!-- 소수점 매매 거래 range 최대-------------------------------------------->
-        <v-card class="pa-3 text-center">최대가격:11000</v-card>
+        <v-card class="pa-3 text-center">최대가격:{{ roomData.maxPrice }}</v-card>
       </v-col>
       <v-col cols="2">
           <v-card class="pa-3 text-center">콤이</v-card>
@@ -46,13 +46,16 @@
 </template>
 
 <script>
+  import axios from 'axios'; // axios 라이브러리를 import
   import VueApexCharts from "vue-apexcharts";
+
   export default {
     components: {
         apexcharts: VueApexCharts,
     },
     data () {
       return {
+        userId : this.$route.params.userId,
         roomData: null, // API에서 가져온 데이터 저장
         chartOptions: {
           chart: {
@@ -168,7 +171,7 @@
       async fetchRoomData() {
         try {
           const roomId = this.$route.params.roomId; // URL에서 roomId 가져오기
-          const response = await axios.get(`http://localhost:8081/room/${userId}/${roomId}`);
+          const response = await axios.get('http://localhost:8081/chat/room/'+this.$route.params.userId+'/'+this.$route.params.roomMemberId);
           this.roomData = response.data; // 데이터를 로컬 상태에 저장
         } catch (error) {
           console.error("Error fetching room data:", error);

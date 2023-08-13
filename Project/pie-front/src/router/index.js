@@ -21,7 +21,7 @@ const routes = [
       import(/* webpackChunkName: "MyPage" */ "../views/MyPage.vue")
   },
   {
-    path: "/room/:userId/:roomId",
+    path: "/room/:userId/:roomMemberId",
     name: "Room",
     component: () =>
         import(/* webpackChunkName: "room" */ "../views/Room.vue")
@@ -39,13 +39,13 @@ const routes = [
      import(/* webpackChunkName: "room" */ "../views/ChatRoom.vue")
  },
  {
-  path: "/room-create",
+  path: "/room-create/:userId",
   name: "Createroom",
   component: () =>
     import(/* webpackChunkName: "room" */ "../views/Createroom.vue")
 },
 {
-  path: "/room-list",
+  path: "/room-list/:userId",
   name: "RoomList",
   component: () =>
     import(/* webpackChunkName: "room" */ "../views/RoomList.vue")
