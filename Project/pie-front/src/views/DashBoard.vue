@@ -124,7 +124,7 @@
                 </v-list-item-avatar>
                 <v-list-item-content>                    
                     <v-list-item-subtitle>{{stock_title}}</v-list-item-subtitle>
-                    <v-list-item-title>{{stock_price}}원</v-list-item-title>                    
+                    <v-list-item-title>{{comma(stock_price)}}원</v-list-item-title>                    
                 </v-list-item-content>
                 
               </v-list-item>
@@ -166,8 +166,8 @@
                     <v-icon color="red accent-4" size="30">fas fa-sort-up</v-icon>  
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-subtitle>POSCO홀딩스</v-list-item-subtitle>
-                  <v-list-item-title>577,000원</v-list-item-title>
+                  <v-list-item-subtitle>LG전자</v-list-item-subtitle>
+                  <v-list-item-title>103,800원</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -248,7 +248,7 @@ export default {
     salary: '5800만원',
     property: '1억 2천5백',
     stock_title: '삼성전자',
-    stock_price: 68000,
+    stock_price: '68000',
     itemsName : [{
   stockName: "삼성전자"},
 {
@@ -285,6 +285,10 @@ export default {
   //       // console.log(res.data);
   },
   methods: {
+    comma(number){
+      const formattedNumber = parseInt(number).toLocaleString()
+      return formattedNumber
+    },
     stock () {
       setInterval(() => {
         var num = Math.floor(Math.random() * (13 - 0) + 0);
@@ -292,6 +296,8 @@ export default {
         axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${this.itemsName[num].stockName}&numOfRows=1&resultType=json`)
         .then(res => {
         var stockLists = res.data.response.body.items.item[0];
+        this.stock_title = stockLists.itmsNm
+        this.stock_price = stockLists.clpr
         console.log('2222', stockLists);
         return stockLists;
       })
