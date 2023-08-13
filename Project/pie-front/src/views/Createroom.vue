@@ -114,7 +114,7 @@ export default{
                   if (this.selectedList.length >= 2) {
                     window.location.href = "/room-list"; // 2개 이상일 때
                   } else {
-                    window.location.href = "/room"; // 1개일 때
+                    window.location.href = "/room/"+this.userId+"/"+response.data.roomId; // 1개일 때
                   }
                 }
               })

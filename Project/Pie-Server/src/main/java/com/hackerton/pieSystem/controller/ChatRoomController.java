@@ -38,9 +38,9 @@ public class ChatRoomController {
     }
 
     // 모든 채팅방 목록 반환
-    @GetMapping("/rooms")
+    @GetMapping("/rooms/{userId}")
     @ResponseBody
-    public List<RoomMemberResponseDto> room(@RequestParam String userId) {
+    public List<RoomMemberResponseDto> findAllRoom(@PathVariable String userId) {
 
         return chatService.findAllRoom(userId);
     }
@@ -48,9 +48,9 @@ public class ChatRoomController {
     // 특정 채팅방 조회
     @GetMapping("/room/{userId}/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String userId
+    public void roomInfo(@PathVariable String userId
                             , @PathVariable String roomId) {
 
-        return chatService.findById(userId, roomId);
+//        return chatService.findById(userId, roomId);
     }
 }
