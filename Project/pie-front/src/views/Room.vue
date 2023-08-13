@@ -39,32 +39,45 @@
             :key="i"
           >
             <td :class="{
-              'blue lighten-4': i > 0,
-              'red lighten-1': i <= 0
-            }">{{ 
+              'blue lighten-5': i == 5,
+              'blue lighten-4': i == 4,
+              'blue lighten-3': i == 3,
+              'blue lighten-2': i == 2,
+              'blue lighten-1': i == 1,
+              'red lighten-1': i == -1,
+              'red lighten-2': i == -2,
+              'red lighten-3': i == -3,
+              'red lighten-4': i == -4,
+              'red lighten-5': i == -5,
+
+            }" style="font-weight: bold">{{ 
               stockInfo.now+i*get_unit(stockInfo.now)
             }}</td>
           </tr>
           </tbody>
         </v-simple-table>
       </v-col>
-      <v-col cols="4">
-        <!-- 소수점 매매 거래 range 최소-------------------------------------------->
-        <v-card class="pa-3 text-center">최소가격:{{ roomData.minPrice }}</v-card>
-        <v-row>
-          <v-col cols="10">
-            <br></br>
-              <!-- 소수점 거래를 위한 참여자 퍼센테이지-------------------------------------------->
+      <v-col cols="10">
+        <v-container>
+          <v-row>
+            <v-col cols="5">
+              <!-- 소수점 매매 거래 range 최소-------------------------------------------->
+              <v-card class="pa-3 text-center">최소가격:{{ roomData.minPrice }}</v-card>
+            </v-col>
+            <v-col cols="5">
+              <!-- 소수점 매매 거래 range 최대-------------------------------------------->
+              <v-card class="pa-3 text-center">최대가격:{{ roomData.maxPrice }}</v-card>
+            </v-col>
+            <v-col cols="2">
+                <v-card class="pa-3 text-center">{{ userId }}님</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
               <apexcharts width="900" height="350" type="bar" :options="chartOptions" :series="series"/>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="4">
-        <!-- 소수점 매매 거래 range 최대-------------------------------------------->
-        <v-card class="pa-3 text-center">최대가격:{{ roomData.maxPrice }}</v-card>
-      </v-col>
-      <v-col cols="2">
-          <v-card class="pa-3 text-center">{{ userId }}님</v-card>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
     <v-overlay
@@ -165,7 +178,10 @@
               colors: ['#fff']
           },
           title: {
-              text: '참여 현황'
+              text: '참여 현황',
+              style: {
+                fontSize: '23px'
+              }
           },
           xaxis: {
             max: 100,
@@ -192,11 +208,16 @@
               horizontalAlign: 'left',
               offsetX: 40,
               showForSingleSeries: true
+          },
+          dataLabels: {
+            formatter: function (val) {
+              return val + "%"
+            }
           }
       },
       series: [],
       stockInfo:[],
-      array: [5, 4, 3, 2, 1, 0, -1, -2, -3, -4],
+      array: [5, 4, 3, 2, 1, -1, -2, -3, -4, -5],
       exit: false,
       buy: false,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
@@ -279,7 +300,17 @@
       // 방 나가기
       exitRoom() {
         window.location.href = "/room-list/"+this.userId; // 방 리스트 화면으로 이동
-      },
+      }
+      /*
+      get_color(ind) {
+        if (ind > 0) {
+          return "blue-lighten-"+ind.toString();
+        }
+        else {
+          return "red-lighten-"+ind.toString();
+        }
+      }
+      */
     },
   }
 </script>
