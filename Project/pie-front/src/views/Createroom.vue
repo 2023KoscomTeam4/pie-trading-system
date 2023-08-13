@@ -11,7 +11,23 @@
                 :item-value="item => item"
                 label="종목"
                 multiple
-            ></v-autocomplete>
+                @input="userInput=null"
+                :search-input.sync="userInput"
+            >
+              <template #item="{ item }">
+                <v-list-item-content>
+                  <v-list-item-subtitle>
+                    {{ item.no }}
+                  </v-list-item-subtitle>
+                  <v-list-item-title>
+                    {{ item.stockName }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ item.price }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </template>
+            </v-autocomplete>
         </v-container>
         <v-card-text v-for="(item, index) in selectedList">
           <v-container>
@@ -61,6 +77,7 @@ export default{
       userId : "ko1",
       stocklist: [],
       selectedList: [],
+      userInput: null,
     };
   },
   created() {
