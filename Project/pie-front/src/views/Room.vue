@@ -10,6 +10,7 @@
       <v-col cols="2">
 
         <!-- NOTE: 실시간 금액 API-------------------------------------------->
+        <!----------------
         <v-row>
           <v-col cols="12">
             <v-card>
@@ -28,19 +29,21 @@
             </v-card>
           </v-col>
         </v-row>
-
+        ---------------->
 
         <!-- 호가창-------------------------------------------->
         <v-simple-table class="text-center">
           <tbody>
           <tr
-            v-for="item in stock"
-            :key="item.price"
+            v-for="i in array"
+            :key="i"
           >
             <td :class="{
-              'blue lighten-4': item.ind <= 5,
-              'red lighten-1': item.ind > 5
-            }">{{ item.price }}</td>
+              'blue lighten-4': i > 0,
+              'red lighten-1': i <= 0
+            }">{{ 
+              stockInfo.now+i*get_unit(stockInfo.now)
+            }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -64,6 +67,41 @@
           <v-card class="pa-3 text-center">콤이</v-card>
       </v-col>
     </v-row>
+    <v-overlay
+      v-model="exit"
+      contained
+    >
+      <v-layout justify-center align-center>
+        <v-text class>현재가가 설정한 범위를 벗어났습니다. 나가시겠습니까?</v-text>
+      </v-layout>
+      <br></br>
+      <v-layout justify-center align-center>
+        <v-col cols="auto">
+          <v-btn
+            color="red darken-1"
+            @click="exit = false"
+          >
+            나가기
+          </v-btn>
+        </v-col>
+        <v-col cols="auto">
+          <v-btn
+            color="orange darken-1"
+            @click="exit = false"
+          >
+            새로운 방
+          </v-btn>
+        </v-col>
+        <v-col cols="auto">
+          <v-btn
+            color="green darken-1"
+            @click="exit = false"
+          >
+            머무르기
+          </v-btn>
+        </v-col>
+      </v-layout>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -143,6 +181,8 @@
           data: [30]
       }],
       stockInfo:[],
+      array: [5, 4, 3, 2, 1, 0, -1, -2, -3, -4],
+      /*
       stock: [
         {
           price: 10500,
@@ -184,7 +224,8 @@
           price: 9600,
           ind: 10,
         },
-      ],
+      ],*/
+      exit: true,
       }
     },
     created() {
@@ -215,9 +256,31 @@
           console.error("Error fetching stock data:", error);
         }
       },
+      get_unit(num) {
+        if (num < 2000) {
+          return 1;
+        }
+        else if (num < 5000) {
+          return 5;
+        }
+        else if (num < 20000) {
+          return 10;
+        }
+        else if (num < 50000) {
+          return 50;
+        }
+        else if (num < 200000) {
+          return 100;
+        }
+        else if (num < 500000) {
+          return 500;
+        }
+        else {
+          return 1000;
+        }
+      },
     },
   }
-
 </script>
 <style lang="">
   
