@@ -114,7 +114,7 @@
         <v-col cols="auto">
           <v-btn
             color="red darken-1"
-            @click="buy = false"
+            @click="exitRoom"
           >
             나가기
           </v-btn>
@@ -320,6 +320,10 @@
           this.buy = false;
         }
         return total
+      },
+      // 방 나가기
+      exitRoom() {
+        window.location.href = "/room-list/"+this.userId; // 방 리스트 화면으로 이동
       }
     },
   }
