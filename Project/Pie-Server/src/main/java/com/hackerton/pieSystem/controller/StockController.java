@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.hackerton.pieSystem.domain.KospiStock;
 import com.hackerton.pieSystem.domain.KospiStockDto;
-import com.hackerton.pieSystem.domain.StockSummary;
+import com.hackerton.pieSystem.domain.StockDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.hackerton.pieSystem.service.StockService;
@@ -20,10 +20,10 @@ public class StockController {
 
     private final StockService stockService;
 
-//    @GetMapping("/stock/{itemCode}")
-//    public StockSummary getStockInfo(@PathVariable String itemCode) {
-//        return stockService.getStockSummary(itemCode);
-//    }
+    @GetMapping("/stock/{itemCode}")
+    public StockDto getStockInfo(@PathVariable String itemCode) {
+        return stockService.getStockSummary(itemCode);
+    }
 
     @GetMapping("/all")
     public List<KospiStockDto> getKosPiStockList(HttpServletRequest request) {
