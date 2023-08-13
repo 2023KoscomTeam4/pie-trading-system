@@ -102,6 +102,29 @@
         </v-col>
       </v-layout>
     </v-overlay>
+    <v-overlay
+      v-model="buy"
+      contained
+    >
+      <v-layout justify-center align-center>
+        <v-text class>체결되었습니다!</v-text>
+      </v-layout>
+      <br></br>
+      <v-layout justify-center align-center>
+        <v-col cols="auto">
+          <v-btn
+            color="red darken-1"
+            @click="buy = false"
+          >
+            나가기
+          </v-btn>
+        </v-col>
+      </v-layout>
+    </v-overlay>
+    <br></br>
+    <v-card>
+      {{ roomData }}
+    </v-card>
   </v-container>
 </template>
 
@@ -226,6 +249,7 @@
         },
       ],*/
       exit: true,
+      buy: true,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
     },
     created() {
@@ -281,6 +305,20 @@
           return 1000;
         }
       },
+      // 참여 퍼센테이지가 100% 이상이 되면 buy 변수를 true로 변경
+      buy_function() {
+        var total = 0;
+        // roomData에서 personPercent 전체 합계 계산
+        for (var mem in this.roomData) {
+          total = total + mem.personPercent;
+        }
+        if (total >= 100) {
+          this.buy = true;
+        }
+        else {
+          this.buy = false;
+        }
+      }
     },
   }
 </script>
