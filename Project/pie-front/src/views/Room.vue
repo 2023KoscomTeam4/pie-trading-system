@@ -3,7 +3,12 @@
     <!-- 종목명-------------------------------------------->
     <v-row>
       <v-col cols="12">
-        <v-card class="pa-3 text-center">{{ roomData.stockName }} (\{{ roomData.price }} <span class="caption grey--text">&#177;{{roomData.pricePercent}}%</span>)</v-card>
+        <v-card class="pa-3 text-center">
+          <span class="font-weight-bold"> {{ roomData.stockName }}</span>
+          (\{{ roomData.price }}
+          <span class="caption grey--text">&#177;{{roomData.pricePercent}}%</span>
+          )
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -30,32 +35,17 @@
           </v-col>
         </v-row>
         ---------------->
-
         <!-- 호가창-------------------------------------------->
-        <v-simple-table class="text-center">
+        <v-simple-table>
           <tbody>
-          <tr
-            v-for="i in array"
-            :key="i"
-          >
-            <td :class="{
-              'blue lighten-5': i == 5,
-              'blue lighten-4': i == 4,
-              'blue lighten-3': i == 3,
-              'blue lighten-2': i == 2,
-              'blue lighten-1': i == 1,
-              'red lighten-1': i == 0,
-              'red lighten-2': i == -1,
-              'red lighten-3': i == -2,
-              'red lighten-4': i == -3,
-              'red lighten-5': i == -4,
-
-            }" style="font-weight: bold">\{{ 
-              get_unit(stockInfo.now, i)
-            }}</td>
+          <tr v-for="i in array" :key="i">
+            <td :class="colorClass(i)" class="styled-cell">
+              {{ get_unit(stockInfo.now, i) }}
+            </td>
           </tr>
           </tbody>
         </v-simple-table>
+
       </v-col>
       <v-col cols="10">
         <v-container>
@@ -66,7 +56,7 @@
             </v-col>
             <v-col cols="5">
               <!-- 소수점 매매 거래 range 최대-------------------------------------------->
-              <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice }}</v-card>
+              <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice.toLocaleString() }}</v-card>
             </v-col>
             <v-col cols="2">
                 <v-card class="pa-3 text-center">{{ userId }}님</v-card>
@@ -74,7 +64,7 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <apexcharts width="900" height="350" type="bar" :options="chartOptions" :series="series"/>
+              <apexcharts height="350" type="bar" :options="chartOptions" :series="series"/>
             </v-col>
           </v-row>
         </v-container>
@@ -225,13 +215,13 @@
       },
       series: [],
       stockInfo:[],
-      array: [5, 4, 3, 2, 1, 0, -1, -2, -3, -4],
+      array: [5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5],
       exit: false,
       buy: false,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
     },
     mounted() {
-      
+
       // 참여 퍼센테이지 합계 1초마다 업데이트
       setInterval(this.fetchRoomData, 1000);
 
@@ -256,6 +246,12 @@
           } catch (error) {
           console.error("Error fetching stock data:", error);
         }
+      },
+      colorClass(i) {
+        if (i >= 1 && i <= 5) return 'blue lighten-3';
+        if (i == 0) return 'blue-grey lighten-5';
+        if (i >= -5 && i <= -1) return 'red lighten-3';
+        return '';
       },
       get_unit(num, a) {
         if (num < 2000) {
@@ -317,6 +313,35 @@
     },
   }
 </script>
-<style lang="">
-  
+
+<style scoped>
+.info-box {
+  max-width: 400px;
+  margin: 20px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.styled-cell {
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+}
+
+.blue.lighten-3 {
+  background-color: #64b5f6;
+  color: #fff;
+}
+
+.blue-grey.lighten-5 {
+  background-color: #eceff1;
+  color: #424242;
+}
+
+.red.lighten-3 {
+  background-color: #e57373;
+  color: #fff;
+}
 </style>
