@@ -26,8 +26,14 @@
               <!-- 소수점 매매 거래 range 최대-------------------------------------------->
               <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice.toLocaleString('ko-KR') }}</v-card>
             </v-col>
-            <v-col cols="2">
-                <v-card class="pa-3 text-center">{{ userId }}님</v-card>
+            <v-col cols="1">
+              <v-card class="pa-3 text-center">{{ userId }}님</v-card>
+            </v-col>
+            <v-col cols="1">
+              <v-card class="pa-3 text-center">
+                <v-icon medium color="orange darken-1">person</v-icon>
+                {{ roomData.personCnt }}
+              </v-card>
             </v-col>
           </v-row>
           <v-row>
@@ -200,7 +206,7 @@
           tooltip: {
             y: {
               formatter: function (val) {
-                return val + "%"
+                return val + "%";
               }
             }
           },
@@ -216,7 +222,7 @@
           },
           dataLabels: {
             formatter: function (val) {
-              return val + "%"
+              return val + "%";
             },
             style: {
               fontSize: '40px'
