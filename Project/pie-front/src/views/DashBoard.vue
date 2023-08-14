@@ -245,7 +245,7 @@ export default {
     age: '28',
     job: '전업 투자자',
     investOpt: '3등급 (중위험)',
-    salary: '5800만원',
+    salary: '5800',
     property: '1억 2천5백',
     stock_title: '삼성전자',
     stock_price: '68000',
