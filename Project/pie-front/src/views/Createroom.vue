@@ -36,7 +36,10 @@
                 {{ item.stockName }}
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-card height="70%" hint="시가">금일 시작가 {{ item.price }}</v-card>
+                <v-card height="70%" class="d-flex flex-column justify-center align-center" hint="시가">
+                  <span class="font-weight-light small">금일 시작가</span>
+                  <span class="font-weight-bold ">{{ item.price }}</span>
+                </v-card>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field

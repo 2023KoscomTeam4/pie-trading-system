@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 public class RoomMember {
@@ -21,4 +23,5 @@ public class RoomMember {
     @Column  Double tradingCnt;
     @Column  Integer personPercent;
     @Column  String contractCmpYn;
+    @Column LocalDateTime createdAt;
 }

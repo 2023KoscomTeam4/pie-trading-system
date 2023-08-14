@@ -43,7 +43,7 @@ public class StockService {
                 kospi.setNo(kospiData.getDiscussionRoomUrl().replace("https://finance.naver.comhttps://finance.naver.com/item/board.naver?code=", ""));
                 kospi.setStockName(kospiData.getStockName());
                 kospi.setPrice(kospiData.getPrice());
-                kospiStockRepository.save(kospi); // 데이터 저장 또는 업데이트
+                kospiStockRepository.saveWithTimestamp(kospi); // 데이터 저장 또는 업데이트
             }
         }
     }

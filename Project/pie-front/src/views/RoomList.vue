@@ -1,9 +1,15 @@
 <template>
   <v-container fluid :grid-list-md="!$vuetify.breakpoint.xs">
     <v-layout wrap row>
-      <v-flex md12 class="pb-2 clickable"
+      <v-flex v-if="roomList.length <= 0" class="centered-content">
+        <p>매매요청된 PIE STOCK이 없습니다. <br>매매요청하시겠습니까?</p>
+        <v-btn :to="'/room-create/' + userId " class="orange lighten-1 white--text">요청하기</v-btn>
+      </v-flex>
+      <v-flex v-else
+              md12 class="pb-2 clickable"
               v-for="item in roomList"
-              :key="item.stockId">
+              :key="item.stockId"
+              >
         <router-link :to="'/room/' + userId +'/'+ item.myRoomMemberId" tag="div">
           <v-card>
           <v-container pa-1>
@@ -30,7 +36,11 @@
                   <div class="d-flex align-center">
                     <div>
                       <span class="body-1 font-weight-bold">{{item.myTradingCnt}}주
-                        <span class="caption grey--text">{{item.totalPercent}}({{item.myPersonPercent}})/100% 구매대기중</span></span>
+                        <span :class="item.totalPercent >= 90 ? (item.totalPercent >= 100 ? 'red--text blinking' : 'caption grey--text blinking') : 'caption grey--text'">
+                          {{item.totalPercent}}({{item.myPersonPercent}})/100%
+                          {{item.totalPercent >= 90 ? (item.totalPercent >= 100 ? '구매완료' : '구매임박') : '구매대기중'}}
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </v-card>
@@ -119,6 +129,7 @@ export default{
                   this.$set(this.progressValues, item.roomId, 0); // progressValues 초기화
                   // console.log(this.progressValues)
                 });
+                // console.log(this.roomList)
                 this.updateSeriesAndLabels(); // series와 labels 업데이트
               });
     },
@@ -137,7 +148,24 @@ export default{
 }
 </script>
 <style>
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blinking {
+  animation: blink 1s linear infinite;
+}
+
 .clickable {
   cursor: pointer;
+}
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height: 100vh; /* 브라우저 뷰포트의 높이를 채우도록 설정 */
 }
 </style>
