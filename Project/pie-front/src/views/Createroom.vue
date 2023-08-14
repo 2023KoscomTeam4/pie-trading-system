@@ -1,86 +1,83 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes.light.background}">
-    <v-container>
-      <v-card>
-        <v-sheet color="orange lighten-4">
+  <v-app id="inspire">
+    <v-main class="orange lighten-4">
+    <v-container class="my-5">
+      <v-card elevation="2">
+        <v-sheet color="orange lighten-2" class="py-3">
           <v-row class="align-center justify-center">
-            <v-card-title class="justify-center black--text" color="orange-darken">
-              소수점 매매
+            <v-card-title class="justify-center black--text font-weight-bold">
+              파이 생성
             </v-card-title>
           </v-row>
         </v-sheet>
-          <v-container>
-            <v-select
-              label="계좌 선택"
-              :items="accountlist"
-              >
-            </v-select>
-            <v-autocomplete
-                v-model = "selectedList"
-                :items="stocklist"
-                item-text="stockName"
-                :item-value="item => item"
-                label="종목"
-                multiple
-                @input="userInput=null"
-                :search-input.sync="userInput"
-            >
-              <template #item="{ item }">
-                <v-list-item-content>
-                  <v-list-item-subtitle>
-                    {{ item.no }}
-                  </v-list-item-subtitle>
-                  <v-list-item-title>
-                    {{ item.stockName }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    \{{ item.price }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </template>
-            </v-autocomplete>
-          </v-container>
-          <v-card-text v-for="(item, index) in selectedList">
-            <v-container>
-              <v-row>
-                <v-col cols="12">
+        <v-container>
+          <v-select label="계좌 선택" :items="accountlist"></v-select>
+          <v-autocomplete
+              v-model="selectedList"
+              :items="stocklist"
+              item-text="stockName"
+              :item-value="item => item"
+              label="종목"
+              multiple
+              @input="userInput=null"
+              :search-input.sync="userInput"
+          >
+            <template #item="{ item }">
+              <v-list-item-content>
+                <v-list-item-title class="font-weight-bold">
                   {{ item.stockName }}
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-card height="70%" class="d-flex flex-column justify-center align-center" hint="시가">
-                    <span class="font-weight-light small">금일 시작가</span>
-                    <span class="font-weight-bold ">{{ item.price }}</span>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                      v-model="item.pricePercent"
-                      label="체결가(시가대비) +/-(%)"
-                      hint="체결가(시가대비) +/-(%)"
-                      :rules="[value => !value || value <= 100 || '값은 100 이하이어야 합니다.']"
-                      required
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                      v-model="item.orderCnt"
-                      label="소수점 매수수량"
-                      hint="매수수량"
-                      :rules="[value => (value > 0 && value < 1) || '값은 0 이상 1 미만이어야 합니다.']"
-                      type="number"
-                      step="0.01"
-                      required
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn class="orange darken-1" @click="createRoom">주문</v-btn>
-          </v-card-actions>
-        </v-card>
+                </v-list-item-title>
+                <v-list-item-subtitle class="caption grey--text">
+                  {{ item.no }} - \{{ item.price }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </v-autocomplete>
+        </v-container>
+        <v-card-text v-for="(item, index) in selectedList" :key="index">
+          <v-container>
+            <v-row>
+              <v-col cols="12" class="font-weight-bold mb-3">
+                {{ item.stockName }}
+              </v-col>
+              <v-col cols="12" sm="4" md="4">
+                <v-card outlined class="d-flex flex-column justify-center align-center" hint="시가">
+                  <span class="font-weight-light caption grey--text">금일 시작가</span>
+                  <span class="font-weight-bold headline">\{{ item.price }}</span>
+                </v-card>
+              </v-col>
+              <v-col cols="12" sm="4" md="4">
+                <v-text-field
+                    v-model="item.pricePercent"
+                    label="체결가(시가대비) +/-(%)"
+                    :rules="[value => !value || value <= 100 || '값은 100 이하이어야 합니다.']"
+                    filled
+                    type="number"
+                    step="1"
+                    required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="4" md="4">
+                <v-text-field
+                    v-model="item.orderCnt"
+                    label="소수점 매수수량"
+                    :rules="[value => (value > 0 && value < 1) || '값은 0 이상 1 미만이어야 합니다.']"
+                    filled
+                    type="number"
+                    step="0.01"
+                    required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="orange darken-1 white--text" @click="createRoom">주문</v-btn>
+        </v-card-actions>
+      </v-card>
     </v-container>
+    </v-main>
   </v-app>
 </template>
 
