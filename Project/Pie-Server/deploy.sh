@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPOSITORY=/home/ubuntu/app/pie-trading-system/Project/
+REPOSITORY=/home/ubuntu/app/pie-trading-system/Project
 
 PROJECT_NAME=Pie-Server
 
