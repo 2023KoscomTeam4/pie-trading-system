@@ -1,13 +1,24 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 // import DashBoard from "../views/DashBoard.vue";
+import SignIn from "../views/SignIn.vue";
 
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', 
-    redirect: '/dash-board' 
+  // { path: '/', 
+  //   redirect: '/dash-board' 
+  // },
+  {
+    path: "/",
+    name: "SignIn",
+    component: SignIn
+  },
+  {
+    path: "/signIn",
+    name: "SignIn",
+    component: SignIn
   },
   {
     path: "/dash-board",
