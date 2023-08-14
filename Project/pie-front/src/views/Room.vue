@@ -20,11 +20,11 @@
             </v-col>
             <v-col cols="4">
               <!-- 소수점 매매 거래 range 최소-------------------------------------------->
-              <v-card class="pa-3 text-center">최소가격: \{{ roomData.minPrice.toLocaleString() }}</v-card>
+              <v-card class="pa-3 text-center">최소가격: \{{ roomData.minPrice.toLocaleString('ko-KR') }}</v-card>
             </v-col>
             <v-col cols="4">
               <!-- 소수점 매매 거래 range 최대-------------------------------------------->
-              <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice.toLocaleString() }}</v-card>
+              <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice.toLocaleString('ko-KR') }}</v-card>
             </v-col>
             <v-col cols="2">
                 <v-card class="pa-3 text-center">{{ userId }}님</v-card>
@@ -104,24 +104,24 @@
               </v-col>
             </v-layout>
           </v-overlay>
-          <v-overlay
-            v-model="buy"
-            contained
-          >
-            <v-layout justify-center align-center>
-              <v-text class>체결되었습니다!</v-text>
-            </v-layout>
-            <br></br>
-            <v-layout justify-center align-center>
-              <v-col cols="auto">
+          <v-overlay v-model="buy" >
+            <v-card shaped class="overlay-card">
+              <v-card-title class="overlay-title">
+                체결되었습니다!
+              </v-card-title>
+              <v-card-text class="overlay-content">
+                축하합니다! 거래가 성공적으로 체결되었습니다.
+              </v-card-text>
+              <v-card-actions class="overlay-actions">
                 <v-btn
-                  color="red darken-1"
-                  @click="exitRoom"
+                    color="red darken-1"
+                    @click="exitRoom"
+                    class="exit-button"
                 >
                   나가기
                 </v-btn>
-              </v-col>
-            </v-layout>
+              </v-card-actions>
+            </v-card>
           </v-overlay>
         </v-card>
       </v-container>
@@ -345,5 +345,34 @@
 .red.lighten-3 {
   background-color: #e57373;
   color: #fff;
+}
+
+.overlay-card {
+  max-width: 400px;
+  //border-radius: 12px;
+  //box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.overlay-title {
+  //color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+}
+
+.overlay-content {
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.overlay-actions {
+  justify-content: center;
+}
+
+.exit-button {
+  padding: 30px 30px;
+  font-weight: bold;
+  font-size: 16px;
 }
 </style>
