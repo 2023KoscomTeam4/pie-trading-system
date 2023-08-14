@@ -1,9 +1,20 @@
 <template>
-    <v-card>
-        <v-card-title>
-          <span class="text-h5">소수점 매매</span>
-        </v-card-title>
-        <v-container>
+  <v-app :style="{background: $vuetify.theme.themes.light.background}">
+    <v-container>
+      <v-card>
+        <v-sheet color="orange lighten-4">
+          <v-row class="align-center justify-center">
+            <v-card-title class="justify-center black--text" color="orange-darken">
+              소수점 매매
+            </v-card-title>
+          </v-row>
+        </v-sheet>
+          <v-container>
+            <v-select
+              label="계좌 선택"
+              :items="accountlist"
+              >
+            </v-select>
             <v-autocomplete
                 v-model = "selectedList"
                 :items="stocklist"
@@ -23,52 +34,54 @@
                     {{ item.stockName }}
                   </v-list-item-title>
                   <v-list-item-subtitle>
-                    {{ item.price }}
+                    \{{ item.price }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </template>
             </v-autocomplete>
-        </v-container>
-        <v-card-text v-for="(item, index) in selectedList">
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                {{ item.stockName }}
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-card height="70%" class="d-flex flex-column justify-center align-center" hint="시가">
-                  <span class="font-weight-light small">금일 시작가</span>
-                  <span class="font-weight-bold ">{{ item.price }}</span>
-                </v-card>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                    v-model="item.pricePercent"
-                    label="체결가(시가대비) +/-(%)"
-                    hint="체결가(시가대비) +/-(%)"
-                    :rules="[value => !value || value <= 100 || '값은 100 이하이어야 합니다.']"
-                    required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                    v-model="item.orderCnt"
-                    label="소수점 매수수량"
-                    hint="매수수량"
-                    :rules="[value => (value > 0 && value < 1) || '값은 0 이상 1 미만이어야 합니다.']"
-                    type="number"
-                    step="0.01"
-                    required
-                ></v-text-field>
-              </v-col>
-            </v-row>
           </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn class="orange darken-1" @click="createRoom">주문</v-btn>
-        </v-card-actions>
-      </v-card>
+          <v-card-text v-for="(item, index) in selectedList">
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  {{ item.stockName }}
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-card height="70%" class="d-flex flex-column justify-center align-center" hint="시가">
+                    <span class="font-weight-light small">금일 시작가</span>
+                    <span class="font-weight-bold ">{{ item.price }}</span>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                      v-model="item.pricePercent"
+                      label="체결가(시가대비) +/-(%)"
+                      hint="체결가(시가대비) +/-(%)"
+                      :rules="[value => !value || value <= 100 || '값은 100 이하이어야 합니다.']"
+                      required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                      v-model="item.orderCnt"
+                      label="소수점 매수수량"
+                      hint="매수수량"
+                      :rules="[value => (value > 0 && value < 1) || '값은 0 이상 1 미만이어야 합니다.']"
+                      type="number"
+                      step="0.01"
+                      required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn class="orange darken-1" @click="createRoom">주문</v-btn>
+          </v-card-actions>
+        </v-card>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -81,6 +94,8 @@ export default{
       stocklist: [],
       selectedList: [],
       userInput: null,
+      selectedAccount: null,
+      accountlist: ['[키움증권] 5001-4892', '[NH투자증권] 4892-1892']
     };
   },
   created() {
@@ -111,7 +126,7 @@ export default{
 
           axios.post('http://localhost:8081/chat/create-room', params)
               .then(response => {
-                alert(response.data.stockName + "파이 개설에 성공하였습니다.");
+                alert(response.data.stockName + "방 개설에 성공하였습니다.");
                 // 마지막 항목일 경우에만 리디렉션을 수행
                 if (index === this.selectedList.length - 1) {
                   if (this.selectedList.length >= 2) {
@@ -122,7 +137,7 @@ export default{
                 }
               })
               .catch(response => {
-                alert(item.stockName + "파이 개설에 실패하였습니다.");
+                alert(item.stockName + "방 개설에 실패하였습니다.");
               });
         });
 
