@@ -14,36 +14,29 @@
             </v-list>
 
             <v-list flat>
-                <v-list-item router to="/signIn">
-                    <v-list-item-content>
-                        <v-icon class="mb-2">fas fa-sign-in-alt</v-icon>
-                        <v-list-item-subtitle>로그인하기</v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
                 <v-list-item router to="/dash-board">
                     <v-list-item-content>
                         <v-icon class="mb-2">fas fa-dashboard</v-icon>
                         <v-list-item-subtitle>대시보드</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-item :to="'/room-create/' + userId">
+                      <v-list-item-content>
+                        <v-icon class="mb-2">fas fa-search</v-icon>
+                            <v-list-item-subtitle>방 생성</v-list-item-subtitle>
+                      </v-list-item-content>
+                </v-list-item>
 
-                <v-list-item router to="/room-list/ko1">
+                <v-list-item :to="'/room-list/' + userId">
                         <v-list-item-content>
                         <v-icon class="mb-2">fas fa-list</v-icon>
                             <v-list-item-subtitle>방 목록</v-list-item-subtitle>
                         </v-list-item-content>
                 </v-list-item>
-
-                <v-list-item router to="/room-create/ko1">
-                        <v-list-item-content>
-                        <v-icon class="mb-2">fas fa-search</v-icon>
-                            <v-list-item-subtitle>방 생성</v-list-item-subtitle>
-                        </v-list-item-content>
-                </v-list-item>
-
+                
                 <v-list-item router to="/portfolio">
                         <v-list-item-content>
-                            <v-icon class="mb-2">fas fa-dropbox</v-icon> 
+                            <v-icon class="mb-2">fab fa-elementor</v-icon>
                             <v-list-item-subtitle>포트폴리오</v-list-item-subtitle>
                             </v-list-item-content>
                 </v-list-item>
@@ -68,8 +61,9 @@
 </template>
 <script>
 export default {
-    data: () => ({
-        drawer: true
-    })
+  data: () => ({
+    drawer: true,
+    userId: sessionStorage.getItem("userId"), // 세션 스토리지에서 userId 값을 가져옵니다.
+  })
 }
 </script>

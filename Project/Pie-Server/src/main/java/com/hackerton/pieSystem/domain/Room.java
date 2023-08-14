@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 public class Room {
@@ -19,5 +21,6 @@ public class Room {
     @Column  Integer pricePercent;
     @Column  Integer personCnt;
     @Column  Integer totalPercent;
+    @Column LocalDateTime createdAt;
 
 }
