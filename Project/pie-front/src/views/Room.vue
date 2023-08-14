@@ -44,14 +44,14 @@
               'blue lighten-3': i == 3,
               'blue lighten-2': i == 2,
               'blue lighten-1': i == 1,
-              'red lighten-1': i == -1,
-              'red lighten-2': i == -2,
-              'red lighten-3': i == -3,
-              'red lighten-4': i == -4,
-              'red lighten-5': i == -5,
+              'red lighten-1': i == 0,
+              'red lighten-2': i == -1,
+              'red lighten-3': i == -2,
+              'red lighten-4': i == -3,
+              'red lighten-5': i == -4,
 
-            }" style="font-weight: bold">{{ 
-              stockInfo.now+i*get_unit(stockInfo.now)
+            }" style="font-weight: bold">\{{ 
+              get_unit(stockInfo.now, i)
             }}</td>
           </tr>
           </tbody>
@@ -62,11 +62,11 @@
           <v-row>
             <v-col cols="5">
               <!-- 소수점 매매 거래 range 최소-------------------------------------------->
-              <v-card class="pa-3 text-center">최소가격:{{ roomData.minPrice }}</v-card>
+              <v-card class="pa-3 text-center">최소가격: \{{ roomData.minPrice.toLocaleString() }}</v-card>
             </v-col>
             <v-col cols="5">
               <!-- 소수점 매매 거래 range 최대-------------------------------------------->
-              <v-card class="pa-3 text-center">최대가격:{{ roomData.maxPrice }}</v-card>
+              <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice }}</v-card>
             </v-col>
             <v-col cols="2">
                 <v-card class="pa-3 text-center">{{ userId }}님</v-card>
@@ -148,7 +148,7 @@
     data () {
       return {
         userId : this.$route.params.userId,
-        roomData: null, // API에서 가져온 데이터 저장
+        roomData: {}, // API에서 가져온 데이터 저장
         chartOptions: {
           chart: {
               type: 'bar',
@@ -185,7 +185,12 @@
           },
           xaxis: {
             max: 100,
-            min: 0
+            min: 0,
+            labels: {
+              formatter: function (value) {
+                return value + "%";
+              }
+            }
           },
           yaxis: {
             labels: {
@@ -199,7 +204,7 @@
               }
             }
           },
-          colors: ['#fb8c00', '#ffb74d', '#ef6c00', '#ffa726', '#fb8c00'],
+          colors: ['#FFE0B2', '#FFB74D', '#FB8C00', '#EF6C00'],
           fill: {
               opacity: 1
           },
@@ -212,32 +217,33 @@
           dataLabels: {
             formatter: function (val) {
               return val + "%"
+            },
+            style: {
+              fontSize: '40px'
             }
-          }
+          },
       },
       series: [],
       stockInfo:[],
-      array: [5, 4, 3, 2, 1, -1, -2, -3, -4, -5],
+      array: [5, 4, 3, 2, 1, 0, -1, -2, -3, -4],
       exit: false,
       buy: false,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
     },
-    created() {
-      this.fetchRoomData();
-      // 참여 현황을 위한 series 데이터 업데이트
-
-      // 호가 정보를 1초마다 업데이트
-      setInterval(this.fetchStockData, 1000);
-
+    mounted() {
+      
       // 참여 퍼센테이지 합계 1초마다 업데이트
-      setInterval(this.percent_update, 1000);
+      setInterval(this.fetchRoomData, 1000);
+
     },
     methods: {
       async fetchRoomData() {
         try {
+          this.fetchStockData();
           const roomId = this.$route.params.roomId; // URL에서 roomId 가져오기
           const response = await axios.get('http://localhost:8081/chat/room/'+this.$route.params.userId+'/'+this.$route.params.roomMemberId);
           this.roomData = response.data; // 데이터를 로컬 상태에 저장
+          this.percent_update(); // 참여 현황을 위한 series 데이터 업데이트
         } catch (error) {
           console.error("Error fetching room data:", error);
           // 오류 처리 (예: 사용자에게 오류 메시지 표시)
@@ -245,36 +251,33 @@
       },
       async fetchStockData() {
         try {
-          if(this.roomData != null) {
             const response = await axios.get('http://localhost:8081/kospi/stock/' + this.roomData.no); // 호가 정보가 있는 엔드포인트
             this.stockInfo = response.data;
-          }
-          // console.log(this.stock)
-        } catch (error) {
+          } catch (error) {
           console.error("Error fetching stock data:", error);
         }
       },
-      get_unit(num) {
+      get_unit(num, a) {
         if (num < 2000) {
-          return 1;
+          return (num+a).toLocaleString('ko-KR');
         }
         else if (num < 5000) {
-          return 5;
+          return (num+a*5).toLocaleString('ko-KR');
         }
         else if (num < 20000) {
-          return 10;
+          return (num+a*10).toLocaleString('ko-KR');
         }
         else if (num < 50000) {
-          return 50;
+          return (num+a*50).toLocaleString('ko-KR');
         }
         else if (num < 200000) {
-          return 100;
+          return (num+a*100).toLocaleString('ko-KR');
         }
         else if (num < 500000) {
-          return 500;
+          return (num+a*500).toLocaleString('ko-KR');
         }
         else {
-          return 1000;
+          return (num+a*1000).toLocaleString('ko-KR');
         }
       },
       // 참여 퍼센테이지가 100% 이상이 되면 buy 변수를 true로 변경

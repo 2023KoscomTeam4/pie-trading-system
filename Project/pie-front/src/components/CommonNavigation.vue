@@ -14,6 +14,12 @@
             </v-list>
 
             <v-list flat>
+                <v-list-item router to="/signIn">
+                    <v-list-item-content>
+                        <v-icon class="mb-2">fas fa-sign-in-alt</v-icon>
+                        <v-list-item-subtitle>로그인하기</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
                 <v-list-item router to="/dash-board">
                     <v-list-item-content>
                         <v-icon class="mb-2">fas fa-dashboard</v-icon>
