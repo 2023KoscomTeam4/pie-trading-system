@@ -27,13 +27,6 @@
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item router to="/room-list/ko1">
-                        <v-list-item-content>
-                        <v-icon class="mb-2">fas fa-list</v-icon>
-                            <v-list-item-subtitle>방 목록</v-list-item-subtitle>
-                        </v-list-item-content>
-                </v-list-item>
-
                 <v-list-item router to="/room-create/ko1">
                         <v-list-item-content>
                         <v-icon class="mb-2">fas fa-search</v-icon>
@@ -41,6 +34,13 @@
                         </v-list-item-content>
                 </v-list-item>
 
+                <v-list-item router to="/room-list/ko1">
+                        <v-list-item-content>
+                        <v-icon class="mb-2">fas fa-list</v-icon>
+                            <v-list-item-subtitle>방 목록</v-list-item-subtitle>
+                        </v-list-item-content>
+                </v-list-item>
+                
                 <v-list-item router to="/portfolio">
                         <v-list-item-content>
                             <v-icon class="mb-2">fas fa-dropbox</v-icon> 
