@@ -1,130 +1,130 @@
 <template>
-  <v-container>
-    <!-- 종목명-------------------------------------------->
-    <v-row>
-      <v-col cols="12">
-        <v-card class="pa-3 text-center">
-          <span class="font-weight-bold"> {{ roomData.stockName }}</span>
-          (\{{ roomData.price }}
-          <span class="caption grey--text">&#177;{{roomData.pricePercent}}%</span>
-          )
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="2">
-
-        <!-- NOTE: 실시간 금액 API-------------------------------------------->
-        <!----------------
-        <v-row>
-          <v-col cols="12">
-            <v-card>
-              <h3>{{ stockInfo.marketSum }} 억 {{ stockInfo.marketSum % 100 }} 백만 - 시가 총액</h3>
-              <h3>{{ stockInfo.risefall }} - 1 : 상한 , 2 : 상승, 3: 보합? , 4 : 하한, 5, 하락</h3>
-              <h3>{{ stockInfo.diff }} - 전일대비 가격 차이</h3>
-              <h3>{{ stockInfo.rate }}% - 상승율</h3>
-              <h3>{{ stockInfo.high }} - 고가</h3>
-              <h3>{{ stockInfo.low }} - 저가</h3>
-              <h3>{{ stockInfo.quant }} - 거래량</h3>
-              <h3>{{ stockInfo.amount }} - 거래대금</h3>
-              <h3>{{ stockInfo.per }} - PER</h3>
-              <h3>{{ stockInfo.eps }} - EPS</h3>
-              <h3>{{ stockInfo.pbr }} - PBR</h3>
-              <h3>{{ stockInfo.now }} - 현재가</h3>
+  <v-app :style="{background: $vuetify.theme.themes.light.background}">
+    <v-container>
+      <v-card shaped elevation="24" class="pa-4">
+        <!-- 종목명-------------------------------------------->
+        <v-row class="justify-center">
+          <v-col cols="10">
+            <v-card class="pa-3 text-center">
+              <span class="font-weight-bold"> {{ roomData.stockName }}</span>
+              (\{{ roomData.price }}
+              <span class="caption grey--text">&#177;{{roomData.pricePercent}}%</span>
+              )
             </v-card>
           </v-col>
         </v-row>
-        ---------------->
-        <!-- 호가창-------------------------------------------->
-        <v-simple-table>
-          <tbody>
-          <tr v-for="i in array" :key="i">
-            <td :class="colorClass(i)" class="styled-cell">
-              {{ get_unit(stockInfo.now, i) }}
-            </td>
-          </tr>
-          </tbody>
-        </v-simple-table>
+        <v-row>
+          <v-col cols="2">
+            <v-card class="pa-3 text-center">호가창</v-card>
+          </v-col>
+          <v-col cols="4">
+            <!-- 소수점 매매 거래 range 최소-------------------------------------------->
+            <v-card class="pa-3 text-center">최소가격: \{{ roomData.minPrice.toLocaleString() }}</v-card>
+          </v-col>
+          <v-col cols="4">
+            <!-- 소수점 매매 거래 range 최대-------------------------------------------->
+            <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice.toLocaleString() }}</v-card>
+          </v-col>
+          <v-col cols="2">
+              <v-card class="pa-3 text-center">{{ userId }}님</v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="2">
 
-      </v-col>
-      <v-col cols="10">
-        <v-container>
-          <v-row>
-            <v-col cols="5">
-              <!-- 소수점 매매 거래 range 최소-------------------------------------------->
-              <v-card class="pa-3 text-center">최소가격: \{{ roomData.minPrice.toLocaleString() }}</v-card>
+            <!-- NOTE: 실시간 금액 API-------------------------------------------->
+            <!----------------
+            <v-row>
+              <v-col cols="12">
+                <v-card>
+                  <h3>{{ stockInfo.marketSum }} 억 {{ stockInfo.marketSum % 100 }} 백만 - 시가 총액</h3>
+                  <h3>{{ stockInfo.risefall }} - 1 : 상한 , 2 : 상승, 3: 보합? , 4 : 하한, 5, 하락</h3>
+                  <h3>{{ stockInfo.diff }} - 전일대비 가격 차이</h3>
+                  <h3>{{ stockInfo.rate }}% - 상승율</h3>
+                  <h3>{{ stockInfo.high }} - 고가</h3>
+                  <h3>{{ stockInfo.low }} - 저가</h3>
+                  <h3>{{ stockInfo.quant }} - 거래량</h3>
+                  <h3>{{ stockInfo.amount }} - 거래대금</h3>
+                  <h3>{{ stockInfo.per }} - PER</h3>
+                  <h3>{{ stockInfo.eps }} - EPS</h3>
+                  <h3>{{ stockInfo.pbr }} - PBR</h3>
+                  <h3>{{ stockInfo.now }} - 현재가</h3>
+                </v-card>
+              </v-col>
+            </v-row>
+            ---------------->
+            <!-- 호가창-------------------------------------------->
+            <v-simple-table>
+              <tbody>
+              <tr v-for="i in array" :key="i">
+                <td :class="colorClass(i)" class="styled-cell">
+                  \{{ get_unit(stockInfo.now, i) }}
+                </td>
+              </tr>
+              </tbody>
+            </v-simple-table>
+          </v-col>
+          <v-col cols="10">
+            <apexcharts height="350" type="bar" :options="chartOptions" :series="series"/>
+          </v-col>
+        </v-row>
+        <v-overlay
+          v-model="exit"
+          contained
+        >
+          <v-layout justify-center align-center>
+            <v-text class>현재가가 설정한 범위를 벗어났습니다. 나가시겠습니까?</v-text>
+          </v-layout>
+          <br></br>
+          <v-layout justify-center align-center>
+            <v-col cols="auto">
+              <v-btn
+                color="red darken-1"
+                @click="exit = false"
+              >
+                나가기
+              </v-btn>
             </v-col>
-            <v-col cols="5">
-              <!-- 소수점 매매 거래 range 최대-------------------------------------------->
-              <v-card class="pa-3 text-center">최대가격: \{{ roomData.maxPrice.toLocaleString() }}</v-card>
+            <v-col cols="auto">
+              <v-btn
+                color="orange darken-1"
+                @click="exit = false"
+              >
+                새로운 파이
+              </v-btn>
             </v-col>
-            <v-col cols="2">
-                <v-card class="pa-3 text-center">{{ userId }}님</v-card>
+            <v-col cols="auto">
+              <v-btn
+                color="green darken-1"
+                @click="exit = false"
+              >
+                머무르기
+              </v-btn>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <apexcharts height="350" type="bar" :options="chartOptions" :series="series"/>
+          </v-layout>
+        </v-overlay>
+        <v-overlay
+          v-model="buy"
+          contained
+        >
+          <v-layout justify-center align-center>
+            <v-text class>체결되었습니다!</v-text>
+          </v-layout>
+          <br></br>
+          <v-layout justify-center align-center>
+            <v-col cols="auto">
+              <v-btn
+                color="red darken-1"
+                @click="exitRoom"
+              >
+                나가기
+              </v-btn>
             </v-col>
-          </v-row>
-        </v-container>
-      </v-col>
-    </v-row>
-    <v-overlay
-      v-model="exit"
-      contained
-    >
-      <v-layout justify-center align-center>
-        <v-text class>현재가가 설정한 범위를 벗어났습니다. 나가시겠습니까?</v-text>
-      </v-layout>
-      <br></br>
-      <v-layout justify-center align-center>
-        <v-col cols="auto">
-          <v-btn
-            color="red darken-1"
-            @click="exit = false"
-          >
-            나가기
-          </v-btn>
-        </v-col>
-        <v-col cols="auto">
-          <v-btn
-            color="orange darken-1"
-            @click="exit = false"
-          >
-            새로운 파이
-          </v-btn>
-        </v-col>
-        <v-col cols="auto">
-          <v-btn
-            color="green darken-1"
-            @click="exit = false"
-          >
-            머무르기
-          </v-btn>
-        </v-col>
-      </v-layout>
-    </v-overlay>
-    <v-overlay
-      v-model="buy"
-      contained
-    >
-      <v-layout justify-center align-center>
-        <v-text class>체결되었습니다!</v-text>
-      </v-layout>
-      <br></br>
-      <v-layout justify-center align-center>
-        <v-col cols="auto">
-          <v-btn
-            color="red darken-1"
-            @click="exitRoom"
-          >
-            나가기
-          </v-btn>
-        </v-col>
-      </v-layout>
-    </v-overlay>
-  </v-container>
+          </v-layout>
+        </v-overlay>
+      </v-card>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
