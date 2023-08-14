@@ -13,7 +13,7 @@
                   :key="item.stockId"
                   >
             <router-link :to="'/room/' + userId +'/'+ item.myRoomMemberId" tag="div">
-              <v-card>
+              <v-card shaped elevation="24">
               <v-container pa-1>
                 <v-layout row wrap>
                   <v-flex xs12>
