@@ -148,7 +148,7 @@
     data () {
       return {
         userId : this.$route.params.userId,
-        roomData: null, // API에서 가져온 데이터 저장
+        roomData: {}, // API에서 가져온 데이터 저장
         chartOptions: {
           chart: {
               type: 'bar',
@@ -222,22 +222,20 @@
       buy: false,  // 100%가 되어 체결되었는지 나타내는 bool 변수
       }
     },
-    created() {
-      this.fetchRoomData();
-      // 참여 현황을 위한 series 데이터 업데이트
-
-      // 호가 정보를 1초마다 업데이트
-      setInterval(this.fetchStockData, 1000);
+    mounted() {
 
       // 참여 퍼센테이지 합계 1초마다 업데이트
-      setInterval(this.percent_update, 1000);
+      setInterval(this.fetchRoomData, 1000);
+      
     },
     methods: {
       async fetchRoomData() {
         try {
+          this.fetchStockData();
           const roomId = this.$route.params.roomId; // URL에서 roomId 가져오기
           const response = await axios.get('http://localhost:8081/chat/room/'+this.$route.params.userId+'/'+this.$route.params.roomMemberId);
           this.roomData = response.data; // 데이터를 로컬 상태에 저장
+          this.percent_update(); // 참여 현황을 위한 series 데이터 업데이트
         } catch (error) {
           console.error("Error fetching room data:", error);
           // 오류 처리 (예: 사용자에게 오류 메시지 표시)
@@ -245,11 +243,8 @@
       },
       async fetchStockData() {
         try {
-          if(this.roomData != null) {
-            const response = await axios.get('http://localhost:8081/kospi/stock/' + this.roomData.no); // 호가 정보가 있는 엔드포인트
-            this.stockInfo = response.data;
-          }
-          // console.log(this.stock)
+          const response = await axios.get('http://localhost:8081/kospi/stock/' + this.roomData.no); // 호가 정보가 있는 엔드포인트
+          this.stockInfo = response.data;
         } catch (error) {
           console.error("Error fetching stock data:", error);
         }
