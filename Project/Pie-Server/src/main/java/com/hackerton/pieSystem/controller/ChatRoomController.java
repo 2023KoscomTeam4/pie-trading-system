@@ -52,6 +52,6 @@ public class ChatRoomController {
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
-        return "redirect:http://localhost:3000/room";
+        return "redirect:http://54.180.115.36:3000/room";
     }
 }
