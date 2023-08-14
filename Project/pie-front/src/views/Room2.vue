@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     findAllRoom() {
-      axios.get('http://localhost:8081/chat/rooms').then(response => { this.chatrooms = response.data; });
+      axios.get('http://54.180.115.36:8081/chat/rooms').then(response => { this.chatrooms = response.data; });
     },
     createRoom() {
       if ("" === this.room_name) {
@@ -46,7 +46,7 @@ export default {
       } else {
         var params = new URLSearchParams();
         params.append("name", this.room_name);
-        axios.post('http://localhost:8081/chat/room', params)
+        axios.post('http://54.180.115.36:8081/chat/room', params)
           .then(
             response => {
               alert(response.data.roomName + "방 개설에 성공하였습니다.");
@@ -62,7 +62,7 @@ export default {
       if (sender !== "") {
         localStorage.setItem('wschat.sender', sender);
         localStorage.setItem('wschat.roomId', roomId);
-        location.href = "http://localhost:8081/chat/room/enter/" + roomId;
+        location.href = "http://54.180.115.36:8081/chat/room/enter/" + roomId;
       }
     }
   }

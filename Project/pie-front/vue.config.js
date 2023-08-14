@@ -6,7 +6,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/chat': {
-        target: 'http://localhost:8081',
+        target: 'http://54.180.115.36:8081',
         changeOrigin: true
       },
       // '/dash-board': {

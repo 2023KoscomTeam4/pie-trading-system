@@ -241,7 +241,7 @@
         try {
           this.fetchStockData();
           const roomId = this.$route.params.roomId; // URL에서 roomId 가져오기
-          const response = await axios.get('http://localhost:8081/chat/room/'+this.$route.params.userId+'/'+this.$route.params.roomMemberId);
+          const response = await axios.get('http://54.180.115.36:8081/chat/room/'+this.$route.params.userId+'/'+this.$route.params.roomMemberId);
           this.roomData = response.data; // 데이터를 로컬 상태에 저장
           this.percent_update(); // 참여 현황을 위한 series 데이터 업데이트
         } catch (error) {
@@ -251,7 +251,7 @@
       },
       async fetchStockData() {
         try {
-            const response = await axios.get('http://localhost:8081/kospi/stock/' + this.roomData.no); // 호가 정보가 있는 엔드포인트
+            const response = await axios.get('http://54.180.115.36:8081/kospi/stock/' + this.roomData.no); // 호가 정보가 있는 엔드포인트
             this.stockInfo = response.data;
           } catch (error) {
           console.error("Error fetching stock data:", error);

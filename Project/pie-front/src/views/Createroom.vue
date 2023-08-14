@@ -85,7 +85,7 @@ export default{
   },
   methods: {
     findAllStock() {
-      axios.get('http://localhost:8081/kospi/findall')
+      axios.get('http://54.180.115.36:8081/kospi/findall')
           .then(
               response => {
                 this.stocklist = response.data;
@@ -106,7 +106,7 @@ export default{
           params.append("pricePercent", item.pricePercent); // 이렇게 사용하면 v-model로 연결된 속성을 가져올 수 있습니다.
           params.append("orderCnt", item.orderCnt);
 
-          axios.post('http://localhost:8081/chat/create-room', params)
+          axios.post('http://54.180.115.36:8081/chat/create-room', params)
               .then(response => {
                 alert(response.data.stockName + "방 개설에 성공하였습니다.");
                 // 마지막 항목일 경우에만 리디렉션을 수행

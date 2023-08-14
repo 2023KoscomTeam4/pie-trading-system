@@ -110,7 +110,7 @@ export default{
   },
   methods: {
     findAllRoom() {
-      axios.get('http://localhost:8081/chat/rooms/'+this.userId)
+      axios.get('http://54.180.115.36:8081/chat/rooms/'+this.userId)
           .then(
               response => {
                 this.roomList = response.data;
