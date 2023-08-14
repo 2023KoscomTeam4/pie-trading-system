@@ -34,8 +34,6 @@ const itemsName = [{
 
 const findStock = (value) => 
   { 
-    // console.log("인덱스",value)
-    // console.log(itemsName[value].stockName)
     axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${itemsName[value].stockName}&numOfRows=1&resultType=json`)
     .then(res => {
       stockLists = res.data.response.body.items.item[0];

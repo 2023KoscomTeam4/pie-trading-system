@@ -98,7 +98,7 @@
         <v-flex>
           <v-list class="mt-5">
             <v-list-item>
-              <v-list-item-title class="green--text text--darken-3">최근 인기 종목</v-list-item-title>
+              <v-list-item-title class="green--text text--darken-3">실시간 인기 종목</v-list-item-title>
                 <v-list-item-action>
                   <v-btn class="ma-2" tile outlined="" color="green darken-3"> 
                    <v-icon left>fas fa-eye</v-icon> 보기
@@ -111,12 +111,12 @@
   
   <v-flex>    
     <v-row>    
-      <v-col cols="5" md="4">
+      <v-col cols="12" md="4">
         <v-row>
-          <v-col cols="5" md="2">
+          <v-col cols="12" md="2">
             <v-card height="80px" width="10px" color="orange darken-1"></v-card>
           </v-col>
-          <v-col cols="5" md="10">            
+          <v-col cols="12" md="10">            
             <v-list two-line="" subheader="" class="ml-n8" >
               <v-list-item>
                 <v-list-item-avatar size="60" >
@@ -133,20 +133,20 @@
         </v-row>
       </v-col>
 
-      <v-col cols="9" md="4">
+      <v-col cols="12" md="4">
         <v-row>
-          <v-col cols="5" md="2">
+          <v-col cols="12" md="2">
             <v-card height="80px" width="10px" color="orange darken-1"></v-card>
           </v-col>
-          <v-col cols="5" md="10">
+          <v-col cols="12" md="10">
             <v-list two-line subheader class="ml-n8">
               <v-list-item>
                 <v-list-item-avatar size="60" >
                     <v-icon color="red accent-4" size="30">fas fa-sort-up</v-icon>  
               </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-subtitle>에코프로</v-list-item-subtitle>
-                  <v-list-item-title>1,137,000원</v-list-item-title>
+                  <v-list-item-subtitle>{{stock_title_2}}</v-list-item-subtitle>
+                  <v-list-item-title>{{comma(stock_price_2)}}원</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -154,7 +154,7 @@
         </v-row>
       </v-col>
       
-      <v-col cols="9" md="4">
+      <v-col cols="12" md="4">
         <v-row>
           <v-col cols="12" md="2">
             <v-card height="80px" width="10px" color="orange darken-1"></v-card>
@@ -166,8 +166,8 @@
                     <v-icon color="red accent-4" size="30">fas fa-sort-up</v-icon>  
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-subtitle>LG전자</v-list-item-subtitle>
-                  <v-list-item-title>103,800원</v-list-item-title>
+                  <v-list-item-subtitle>{{stock_title_3}}</v-list-item-subtitle>
+                  <v-list-item-title>{{comma(stock_price_3)}}원</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -249,6 +249,10 @@ export default {
     property: '1억 2천5백',
     stock_title: '삼성전자',
     stock_price: '68000',
+    stock_title_2: '에코프로',
+    stock_price_2: '1137000',
+    stock_title_3: 'LG전자',
+    stock_price_3: '103800',
     itemsName : [{
   stockName: "삼성전자"},
 {
@@ -291,39 +295,49 @@ export default {
     },
     stock () {
       setInterval(() => {
-        var num = Math.floor(Math.random() * (13 - 0) + 0);
+        var num = Math.floor(Math.random() * (4 - 0) + 0);
+        var num2 = Math.floor(Math.random() * (8 - 4) + 4);
+        var num3 = Math.floor(Math.random() * (13 - 9) + 9);
         console.log('33333', this.itemsName[num].stockName)
         axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${this.itemsName[num].stockName}&numOfRows=1&resultType=json`)
         .then(res => {
-        var stockLists = res.data.response.body.items.item[0];
-        this.stock_title = stockLists.itmsNm
-        this.stock_price = stockLists.clpr
-        console.log('2222', stockLists);
-        return stockLists;
-      })
-    .catch(err => {
-      console.log('err', err);
-    })
+          var stockLists = res.data.response.body.items.item[0];
+          this.stock_title = stockLists.itmsNm
+          this.stock_price = stockLists.clpr
+          console.log('2222', stockLists);
+          return stockLists;
+        }).catch(err => {
+          console.log('err', err);
+        })
+        
+        axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${this.itemsName[num2].stockName}&numOfRows=1&resultType=json`)
+        .then(res => {
+          var stockLists = res.data.response.body.items.item[0];
+          this.stock_title_2 = stockLists.itmsNm
+          this.stock_price_2 = stockLists.clpr
+          return stockLists;
+        }).catch(err => {
+          console.log('err', err);
+        })
+    //     axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${this.itemsName[num3].stockName}&numOfRows=1&resultType=json`)
+    //     .then(res => {
+    //       var stockLists = res.data.response.body.items.item[0];
+    //       this.stock_title_3 = stockLists.itmsNm
+    //       this.stock_price_3 = stockLists.clpr
+    //       return stockLists;
+    //     })
+    // .catch(err => {
+    //   console.log('err', err);
+    // })
       }
-      , 8000);
+      , 5000);
     }
   },
   mounted(){
-    // console.log(stock.length)
-    // console.log(news.fetchNews())
     this.stock()
-    
-    
   },
- 
-
 }
-
-
-
 </script>
-
-
 
 <style scoped>
 .rounded {
