@@ -179,8 +179,16 @@
             max: 100,
             min: 0,
             labels: {
-              formatter: function (value) {
-                return value + "%";
+              formatter: function (val) {
+                if (val == 0) {
+                  return "모집";
+                }
+                else if (val == 100) {
+                  return val + "% (완성)";
+                }
+                else {
+                  return val + "%";
+                }
               }
             }
           },
@@ -192,7 +200,7 @@
           tooltip: {
             y: {
               formatter: function (val) {
-                return val + "K"
+                return val + "%"
               }
             }
           },
@@ -328,7 +336,7 @@
 .styled-cell {
   font-weight: bold;
   text-align: center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e0e0e000;
   padding: 10px;
 }
 
