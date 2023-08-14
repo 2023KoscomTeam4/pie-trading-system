@@ -34,7 +34,7 @@ public class ChatService {
         chatRooms = new LinkedHashMap<>();
     }
 
-    //채팅방 생성
+    //채팅파이 생성
     @Transactional
     public RoomDto createRoom(String userId, String no, String stockName, String price, Integer pricePercent, Double orderCnt ) {
         Integer personPercent = (int)(orderCnt*100);
@@ -57,7 +57,7 @@ public class ChatService {
             roomRepository.saveWithTimestamp(room);
 
         }else{
-            //해당 방이 있는 경우
+            //해당 파이이 있는 경우
             room = roomList.get(0);
             room.setPersonCnt(room.getPersonCnt()+1);
             room.setTotalPercent(room.getTotalPercent()+personPercent);
@@ -92,9 +92,9 @@ public class ChatService {
         return chatRoom;
     }
 
-    //채팅방 불러오기
+    //채팅파이 불러오기
     public List<RoomMemberResponseDto> findAllRoom(String userId) {
-//        //채팅방 최근 생성 순으로 반환
+//        //채팅파이 최근 생성 순으로 반환
 //        List<RoomDto> result = new ArrayList<>(chatRooms.values());
 //        Collections.reverse(result);
 
@@ -111,9 +111,9 @@ public class ChatService {
         return result;
     }
 
-    //채팅방 하나 불러오기
+    //채팅파이 하나 불러오기
     public RoomMemberResponseDto findById(String userId, String roomMemberId) {
-//        //roomId로 채팅방 찾기
+//        //roomId로 채팅파이 찾기
 //        return chatRooms.get(roomId);
 
         RoomMember selectedRoom = roomMemberRepository.findById(roomMemberId);
@@ -123,12 +123,12 @@ public class ChatService {
             List<RoomMember> roomMemberList = roomMemberRepository.findByRoomId(selectedRoom.getRoomId());
             result = new RoomMemberResponseDto(selectedRoom, room, roomMemberList);
 
-            // 채팅방 소유자 확인 (가정: RoomDto에 사용자 ID가 포함되어 있음)
+            // 채팅파이 소유자 확인 (가정: RoomDto에 사용자 ID가 포함되어 있음)
             if (selectedRoom != null && selectedRoom.getUserId().equals(userId)) {
                 return result;
             } else {
-                // 채팅방이 없거나 사용자 ID가 일치하지 않는 경우
-                throw new IllegalArgumentException("방을 찾을 수 없습니다.");
+                // 채팅파이이 없거나 사용자 ID가 일치하지 않는 경우
+                throw new IllegalArgumentException("파이을 찾을 수 없습니다.");
             }
         }
         return result;

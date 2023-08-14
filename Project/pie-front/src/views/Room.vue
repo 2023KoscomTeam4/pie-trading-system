@@ -102,7 +102,7 @@
             color="orange darken-1"
             @click="exit = false"
           >
-            새로운 방
+            새로운 파이
           </v-btn>
         </v-col>
         <v-col cols="auto">
@@ -300,9 +300,9 @@
         }
         return total
       },
-      // 방 나가기
+      // 파이 나가기
       exitRoom() {
-        window.location.href = "/room-list/"+this.userId; // 방 리스트 화면으로 이동
+        window.location.href = "/room-list/"+this.userId; // 파이 리스트 화면으로 이동
       }
       /*
       get_color(ind) {

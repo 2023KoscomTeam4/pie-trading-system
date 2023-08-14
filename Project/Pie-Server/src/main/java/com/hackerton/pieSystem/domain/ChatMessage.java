@@ -12,7 +12,7 @@ public class ChatMessage {
     }
 
     private MessageType type;
-    //채팅방 ID
+    //채팅파이 ID
     private String roomId;
     //보내는 사람
     private String sender;

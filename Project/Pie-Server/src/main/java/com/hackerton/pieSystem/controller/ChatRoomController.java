@@ -18,7 +18,7 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatService chatService;
 
-    // 채팅방 생성
+    // 채팅파이 생성
     @PostMapping("/create-room")
     @ResponseBody
     public RoomDto createRoom(@RequestParam String userId
@@ -31,7 +31,7 @@ public class ChatRoomController {
         return chatService.createRoom(userId, no, stockName, price, pricePercent, orderCnt);
     }
 
-    // 모든 채팅방 목록 반환
+    // 모든 채팅파이 목록 반환
     @GetMapping("/rooms/{userId}")
     @ResponseBody
     public List<RoomMemberResponseDto> findAllRoom(@PathVariable String userId) {
@@ -40,7 +40,7 @@ public class ChatRoomController {
     }
 
 
-    // 특정 채팅방 조회
+    // 특정 채팅파이 조회
     @GetMapping("/room/{userId}/{roomMemberId}")
     @ResponseBody
     public RoomMemberResponseDto roomInfo(@PathVariable String userId
@@ -48,7 +48,7 @@ public class ChatRoomController {
         return chatService.findById(userId, roomMemberId);
     }
 
-    // 채팅방 입장 화면
+    // 채팅파이 입장 화면
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);

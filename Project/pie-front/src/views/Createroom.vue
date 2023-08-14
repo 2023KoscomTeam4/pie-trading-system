@@ -111,7 +111,7 @@ export default{
 
           axios.post('http://localhost:8081/chat/create-room', params)
               .then(response => {
-                alert(response.data.stockName + "방 개설에 성공하였습니다.");
+                alert(response.data.stockName + "파이 개설에 성공하였습니다.");
                 // 마지막 항목일 경우에만 리디렉션을 수행
                 if (index === this.selectedList.length - 1) {
                   if (this.selectedList.length >= 2) {
@@ -122,7 +122,7 @@ export default{
                 }
               })
               .catch(response => {
-                alert(item.stockName + "방 개설에 실패하였습니다.");
+                alert(item.stockName + "파이 개설에 실패하였습니다.");
               });
         });
 
