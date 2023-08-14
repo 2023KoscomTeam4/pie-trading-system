@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins =  {"http://localhost:3000", "http://54.180.115.36:3000"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://54.180.115.36:3000"})
 @RequestMapping("/kospi")
 public class StockController {
 

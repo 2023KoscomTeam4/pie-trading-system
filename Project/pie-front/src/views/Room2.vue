@@ -2,16 +2,16 @@
   <div class="container" v-cloak>
     <div class="row">
       <div class="col-md-12">
-        <h3>채팅방 리스트</h3>
+        <h3>채팅파이 리스트</h3>
       </div>
     </div>
     <div class="input-group">
       <div class="input-group-prepend">
-        <label class="input-group-text">방제목</label>
+        <label class="input-group-text">파이제목</label>
       </div>
       <input type="text" class="form-control" v-model="room_name" v-on:keyup.enter="createRoom">
       <div class="input-group-append">
-        <button class="btn btn-primary" type="button" @click="createRoom">채팅방 개설</button>
+        <button class="btn btn-primary" type="button" @click="createRoom">채팅파이 개설</button>
       </div>
     </div>
     <ul class="list-group">
@@ -41,7 +41,7 @@ export default {
     },
     createRoom() {
       if ("" === this.room_name) {
-        alert("방 제목을 입력해 주십시요.");
+        alert("파이 제목을 입력해 주십시요.");
         return;
       } else {
         var params = new URLSearchParams();
@@ -49,12 +49,12 @@ export default {
         axios.post('http://54.180.115.36:8081/chat/room', params)
           .then(
             response => {
-              alert(response.data.roomName + "방 개설에 성공하였습니다.");
+              alert(response.data.roomName + "파이 개설에 성공하였습니다.");
               this.room_name = '';
               this.findAllRoom();
             }
           )
-          .catch(response => { alert("채팅방 개설에 실패하였습니다."); });
+          .catch(response => { alert("채팅파이 개설에 실패하였습니다."); });
       }
     },
     enterRoom(roomId) {
