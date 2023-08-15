@@ -97,7 +97,12 @@
             <v-flex>
               <v-list class="mt-5">
                 <v-list-item>
-                  <v-list-item-title class="green--text text--darken-3">실시간 인기 종목</v-list-item-title>
+                  <v-list-item-title style="font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 74px;
+    letter-spacing: -2.15px;
+    color: #1d242d;">실시간 인기 종목</v-list-item-title>
                     <v-list-item-action>
                       <v-btn class="ma-2" tile outlined="" color="green darken-3"> 
                       <v-icon left>fas fa-eye</v-icon> 보기
@@ -113,7 +118,7 @@
                 <v-col cols="12" md="4">
                   <v-row>
                     <v-col cols="12" md="2">
-                      <v-card height="80px" width="10px" color="green darken-1"></v-card>
+                      <v-card height="80px" width="10px" color="black darken-1"></v-card>
                     </v-col>
                     <v-col cols="12" md="10">            
                       <v-list two-line="" subheader="" class="ml-n8" >
@@ -135,7 +140,7 @@
                 <v-col cols="12" md="4">
                   <v-row>
                     <v-col cols="12" md="2">
-                      <v-card height="80px" width="10px" color="green darken-1"></v-card>
+                      <v-card height="80px" width="10px" color="black darken-1"></v-card>
                     </v-col>
                     <v-col cols="12" md="10">
                       <v-list two-line subheader class="ml-n8">
@@ -156,7 +161,7 @@
                 <v-col cols="12" md="4">
                   <v-row>
                     <v-col cols="12" md="2">
-                      <v-card height="80px" width="10px" color="green darken-1"></v-card>
+                      <v-card height="80px" width="10px" color="black darken-1"></v-card>
                     </v-col>
                     <v-col cols="12" md="10">
                       <v-list two-line subheader class="ml-n8">
@@ -178,18 +183,23 @@
             </v-flex>
 
             <v-flex class="mt-12">
-              <v-row no-gutters="">
+              <v-row>
                 
 
-              <v-col md="8">
-                    <v-flex class="ml-10">
+              <v-col>
+                    <v-flex style="margin-right: 45%;">
                       <v-list>
                         <v-list-item>
-                          <v-list-item-title class="green--text text--darken-3">*주식 종목 관련 뉴스</v-list-item-title>
+                          <v-list-item-title style="font-family: 'Pretendard-Bold';
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 74px;
+    letter-spacing: -2.15px;
+    color: #1d242d;">* 주식 종목 관련 뉴스</v-list-item-title>
                         </v-list-item>
                       </v-list>
                     </v-flex>
-                    <v-flex class="ml-10">
+                    <v-flex style="margin-left: 10%;">
                       <v-row>
                         <v-card>
                           <!-- <v-card-title>
@@ -300,13 +310,11 @@ export default {
         var num = Math.floor(Math.random() * (4 - 0) + 0);
         var num2 = Math.floor(Math.random() * (8 - 4) + 4);
         var num3 = Math.floor(Math.random() * (13 - 9) + 9);
-        console.log('33333', this.itemsName[num].stockName)
         axios.get(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${encoding_key.key}&itmsNm=${this.itemsName[num].stockName}&numOfRows=1&resultType=json`)
         .then(res => {
           var stockLists = res.data.response.body.items.item[0];
           this.stock_title = stockLists.itmsNm
           this.stock_price = stockLists.clpr
-          console.log('2222', stockLists);
           return stockLists;
         }).catch(err => {
           console.log('err', err);
