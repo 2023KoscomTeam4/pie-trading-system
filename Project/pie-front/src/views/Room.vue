@@ -300,7 +300,7 @@
       },
       // 파이 나가기
       exitRoom() {
-        window.location.href = "/room-list/"+this.userId; // 파이 리스트 화면으로 이동
+        window.location.href = "/my-page/"+this.userId; // 파이 리스트 화면으로 이동
       }
       /*
       get_color(ind) {

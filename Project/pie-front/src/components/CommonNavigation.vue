@@ -33,18 +33,11 @@
                             <v-list-item-subtitle>파이 목록</v-list-item-subtitle>
                         </v-list-item-content>
                 </v-list-item>
-                
-                <v-list-item router to="/portfolio">
+
+                <v-list-item :to="'/my-page/' + userId">
                         <v-list-item-content>
-                            <v-icon class="mb-2">fab fa-elementor</v-icon>
-                            <v-list-item-subtitle>포트폴리오</v-list-item-subtitle>
-                            </v-list-item-content>
-                </v-list-item>
-                
-                <v-list-item router to="/my-page">
-                        <v-list-item-content>
-                        <v-icon class="mb-2">fas fa-person</v-icon>
-                            <v-list-item-subtitle>마이페이지</v-list-item-subtitle>
+                          <v-icon class="mb-2">fab fa-elementor</v-icon>
+                            <v-list-item-subtitle>체결 목록</v-list-item-subtitle>
                         </v-list-item-content>
                 </v-list-item>
             </v-list>
