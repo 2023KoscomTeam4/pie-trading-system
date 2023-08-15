@@ -1,7 +1,6 @@
 <template>
     <nav>
-        <v-navigation-drawer permanent v-model="drawer" dark app mini-variant mini-variant-width="100" 
-        style="background-color: #FFB726;">
+        <v-navigation-drawer permanent v-model="drawer" dark app mini-variant mini-variant-width="100" class="orange darken-1">
             <v-list  style="position: absolute; top:0" class="ml-3" flat>
                 <v-img
                   :src="require('../assets/logo.png')"
