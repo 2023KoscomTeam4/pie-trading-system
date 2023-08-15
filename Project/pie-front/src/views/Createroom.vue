@@ -92,7 +92,7 @@ export default{
       selectedList: [],
       userInput: null,
       selectedAccount: null,
-      accountlist: ['[키움증권] 5001-4892', '[NH투자증권] 4892-1892']
+      accountlist: ['[A증권] 5001-4892', '[B증권] 4892-1892']
     };
   },
   created() {
