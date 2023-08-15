@@ -32,11 +32,12 @@ public class ChatRoomController {
     }
 
     // 모든 채팅파이 목록 반환
-    @GetMapping("/rooms/{userId}")
+    @GetMapping("/rooms/{userId}/{contractCmpYn}")
     @ResponseBody
-    public List<RoomMemberResponseDto> findAllRoom(@PathVariable String userId) {
+    public List<RoomMemberResponseDto> findAllRoom(@PathVariable String userId
+                                                , @PathVariable String contractCmpYn) {
 
-        return chatService.findAllRoom(userId);
+        return chatService.findAllRoom(userId, contractCmpYn);
     }
 
 

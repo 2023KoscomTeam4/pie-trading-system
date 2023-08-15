@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-main class="orange lighten-4">
     <v-container class="my-5">
-      <v-card elevation="2">
+      <v-card shaped elevation="24">
         <v-sheet color="orange lighten-2" class="py-3">
           <v-row class="align-center justify-center">
             <v-card-title class="justify-center black--text font-weight-bold">

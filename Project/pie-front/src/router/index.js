@@ -27,7 +27,7 @@ const routes = [
     // component: DashBoard
   },
   {
-    path: "/my-page",
+    path: "/my-page/:userId",
     name: "MyPage",
     component: () =>
       import(/* webpackChunkName: "MyPage" */ "../views/MyPage.vue")

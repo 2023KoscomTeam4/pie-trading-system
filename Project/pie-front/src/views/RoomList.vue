@@ -13,7 +13,7 @@
                   :key="item.stockId"
                   >
             <router-link :to="'/room/' + userId +'/'+ item.myRoomMemberId" tag="div">
-              <v-card>
+              <v-card shaped elevation="24">
               <v-container pa-1>
                 <v-layout row wrap>
                   <v-flex xs12>
@@ -38,7 +38,7 @@
                       <div class="d-flex align-center">
                         <div>
                           <span class="body-1 font-weight-bold">{{item.myTradingCnt}}주
-                            <span :class="item.totalPercent >= 90 ? (item.totalPercent >= 100 ? 'red--text blinking' : 'caption grey--text blinking') : 'caption grey--text'">
+                            <span :class="item.totalPercent >= 90 ? (item.totalPercent >= 100 ? 'red--text blinking' : 'blue--text blinking') : 'caption grey--text'">
                               {{item.totalPercent}}({{item.myPersonPercent}})/100%
                               {{item.totalPercent >= 90 ? (item.totalPercent >= 100 ? '구매완료' : '구매임박') : '구매대기중'}}
                             </span>
@@ -123,7 +123,7 @@ export default{
   },
   methods: {
     findAllRoom() {
-      axios.get('http://54.180.115.36:8081/chat/rooms/'+this.userId)
+      axios.get('http://54.180.115.36:8081/chat/rooms/'+this.userId+'/N')
           .then(
               response => {
                 this.roomList = response.data;
@@ -145,7 +145,7 @@ export default{
             this.progressValues[item.roomId]++;
           }
         }
-      }, 200);
+      }, 100);
     },
   }
 }

@@ -93,12 +93,12 @@ public class ChatService {
     }
 
     //채팅파이 불러오기
-    public List<RoomMemberResponseDto> findAllRoom(String userId) {
+    public List<RoomMemberResponseDto> findAllRoom(String userId, String contractCmpYn) {
 //        //채팅파이 최근 생성 순으로 반환
 //        List<RoomDto> result = new ArrayList<>(chatRooms.values());
 //        Collections.reverse(result);
 
-        List<RoomMember> roomMembers = roomMemberRepository.findByUserId(userId);
+        List<RoomMember> roomMembers = roomMemberRepository.findByUserIdAndContractCmpYn(userId, contractCmpYn);
         List<RoomMemberResponseDto> result = new ArrayList<>();
 
         for (RoomMember roomMember : roomMembers) {
